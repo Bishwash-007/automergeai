@@ -1,8 +1,9 @@
-## Major Project
+## MAJOR PROJECT
 
-## Description
+## DESCRIPTION
 
 ### Project Setup
+1. Clone the Repo
 ```bash
 cd automergeai
 python3 -m venv venv
