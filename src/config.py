@@ -2,11 +2,8 @@ import os
 from pathlib import Path
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-
 YOUR_REPOS = [
-    "remix-run/react-router"
-    # Add your own "owner/repo" strings here
+    "Bishwash-007/SubscriptionTracker"
 ]
-
 REPOS_ROOT = Path("cloned_repos")
-OUTPUT_CSV = "./data/react_router.csv"
+OUTPUT_CSV = "./data/SubscriptionTracker.csv"

@@ -1,13 +1,6 @@
-from github import Github
 from git import Repo
-from pathlib import Path
-from .config import GITHUB_TOKEN
-from .logger import logger
 
-gh = Github(GITHUB_TOKEN) if GITHUB_TOKEN else None
-print(gh)
-
-def clone_repo(repo_full_name, root_dir: Path):
+def clone_repo(repo_full_name, root_dir, logger):
     dest = root_dir / repo_full_name.replace("/", "_")
     if dest.exists():
         logger.info(f"Reusing existing clone: {repo_full_name}")
@@ -19,3 +12,9 @@ def clone_repo(repo_full_name, root_dir: Path):
             logger.error(f"Failed to clone {repo_full_name}: {e}")
             return None
     return dest
+
+def try_git_show(repo, blob_ref):
+    try:
+        return repo.git.show(blob_ref)
+    except Exception:
+        return ""
