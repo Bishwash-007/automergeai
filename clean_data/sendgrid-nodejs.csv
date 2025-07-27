@@ -1,0 +1,4956 @@
+repo,commit,commit_msg,file,left_diff,right_diff,merged_diff
+sendgrid_sendgrid-nodejs,76a6f8ed46dc674cacad619e5cdb04c597c8a6cd,Merge branch 'main' into snyk-fix-42bc938344358ff81bfef2c7e6b66219,packages/inbound-mail-parser/package.json,"-    ""@sendgrid/helpers"": ""^7.4.6"",
+-    ""mailparser"": ""^2.3.4""
++    ""mailparser"": ""^3.3.0"",
++    ""@sendgrid/helpers"": ""^7.4.6""","-  ""version"": ""7.4.6"",
++  ""version"": ""7.6.2"",
+-    ""@sendgrid/helpers"": ""^7.4.6"",
++    ""@sendgrid/helpers"": ""^7.6.2"",","-  ""version"": ""7.4.6"",
++  ""version"": ""7.6.2"",
+-    ""@sendgrid/helpers"": ""^7.4.6"",
+-    ""mailparser"": ""^2.3.4""
++    ""@sendgrid/helpers"": ""^7.6.2"",
++    ""mailparser"": ""^3.3.0"","
+sendgrid_sendgrid-nodejs,bef8c63079aefb217ba7383448336229c7c87f44,Merge branch 'main' into snyk-fix-42bc938344358ff81bfef2c7e6b66219,packages/inbound-mail-parser/package.json,"-    ""mailparser"": ""^2.3.4""
++    ""mailparser"": ""^3.3.0""","-  ""version"": ""7.4.3"",
++  ""version"": ""7.4.6"",
+-    ""@sendgrid/helpers"": ""^7.4.3"",
++    ""@sendgrid/helpers"": ""^7.4.6"",","-  ""version"": ""7.4.3"",
++  ""version"": ""7.4.6"",
+-    ""@sendgrid/helpers"": ""^7.4.3"",
+-    ""mailparser"": ""^2.3.4""
++    ""mailparser"": ""^3.3.0""
++    ""@sendgrid/helpers"": ""^7.4.6"","
+sendgrid_sendgrid-nodejs,dba7f7bb02c62caa2d33617ca36ea09089a42eeb,Merge branch 'master' of https://github.com/digitalica/sendgrid-nodejs into digitalica-master,packages/helpers/classes/attachment.spec.js,"-      attachment.setContent(""Just a string."");
++      attachment.setContent('Just a string.');
+-          filePath: ''
++          filePath: '',
+-    attachment.setContent(new Buffer(""Hello World\n""));
++    attachment.setContent(new Buffer('Hello World\n'));
+-      filePath: path.resolve(__dirname + '/attachment.js')
++      filePath: path.resolve(path.join(__dirname, '/attachment.js')),","-      filePath: path.resolve(__dirname + '/attachment.js')
++      filePath: path.join(__dirname, '/attachment.js'),","-      attachment.setContent(""Just a string."");
++      attachment.setContent('Just a string.');
+-          filePath: ''
++          filePath: '',
+-    attachment.setContent(new Buffer(""Hello World\n""));
++    attachment.setContent(new Buffer('Hello World\n'));
+-      filePath: path.resolve(__dirname + '/attachment.js')
++      filePath: path.join(__dirname, '/attachment.js'),"
+sendgrid_sendgrid-nodejs,61f74bd2b48581285740e5009b353e9e006afb37,Merge branch 'master' into master,packages/client/package.json,"-    ""@types/request"": ""^2.0.3"",
++  },
++  ""devDependencies"": {
++    ""@types/request"": ""^2.0.3""","-  ""description"": ""SendGrid NodeJS API client"",
+-  ""version"": ""6.3.0"",
+-  ""author"": ""SendGrid <dx@sendgrid.com> (sendgrid.com)"",
++  ""description"": ""Twilio SendGrid NodeJS API client"",
++  ""version"": ""6.4.0"",
++  ""author"": ""Twilio SendGrid <dx@sendgrid.com> (sendgrid.com)"",
+-    ""@sendgrid/helpers"": ""^6.3.0"",
++    ""@sendgrid/helpers"": ""^6.4.0"",","-  ""description"": ""SendGrid NodeJS API client"",
+-  ""version"": ""6.3.0"",
+-  ""author"": ""SendGrid <dx@sendgrid.com> (sendgrid.com)"",
++  ""description"": ""Twilio SendGrid NodeJS API client"",
++  ""version"": ""6.4.0"",
++  ""author"": ""Twilio SendGrid <dx@sendgrid.com> (sendgrid.com)"",
+-    ""@sendgrid/helpers"": ""^6.3.0"",
+-    ""@types/request"": ""^2.0.3"",
++    ""@sendgrid/helpers"": ""^6.4.0"",
++  },
++  ""devDependencies"": {
++    ""@types/request"": ""^2.0.3"""
+sendgrid_sendgrid-nodejs,fc1cb691dbf6896132a94c0802c17cdffb7e8e4b,Merge pull request #812 from valtlfelipe/fix-parser  Fix parser constructor error when passing payload,packages/inbound-mail-parser/src/parser.js,"-}
++};","-    this.payload = request.body || {};
++    this.payload = request.body || request.payload || {};","-}
++};
+-    this.payload = request.body || {};
++    this.payload = request.body || request.payload || {};"
+sendgrid_sendgrid-nodejs,fc1cb691dbf6896132a94c0802c17cdffb7e8e4b,Merge pull request #812 from valtlfelipe/fix-parser  Fix parser constructor error when passing payload,packages/inbound-mail-parser/src/parser.spec.js,"-        expect(email).to.be.null;
++        expect(email).to.be.null();","+    it('should return the key values specified in the config from the body', () => {
++      const config = {
++        keys: ['to', 'from'],
++      };
++      const request = {
++        body: {
++          to: 'inbound@inbound.example.com',
++          from: 'Test User <test@example.com>',
++          subject: 'Test Subject',
++        },
++      };
++
++      const parse = new Parse(config, request);
++      const keyValues = parse.keyValues();
++      const expectedValues = {
++        to: 'inbound@inbound.example.com',
++        from: 'Test User <test@example.com>',
++      };
++
++      expect(keyValues).to.be.an('object');
++      expect(keyValues).to.deep.equal(expectedValues);
++    });
++
+-        body: {
++        payload: {","+    it('should return the key values specified in the config from the body', () => {
++      const config = {
++        keys: ['to', 'from'],
++      };
++      const request = {
++        body: {
++          to: 'inbound@inbound.example.com',
++          from: 'Test User <test@example.com>',
++          subject: 'Test Subject',
++        },
++      };
++
++      const parse = new Parse(config, request);
++      const keyValues = parse.keyValues();
++      const expectedValues = {
++        to: 'inbound@inbound.example.com',
++        from: 'Test User <test@example.com>',
++      };
++
++      expect(keyValues).to.be.an('object');
++      expect(keyValues).to.deep.equal(expectedValues);
++    });
++
+-        body: {
++        payload: {
+-        expect(email).to.be.null;
++        expect(email).to.be.null();"
+sendgrid_sendgrid-nodejs,0bdab102f358f3d21826d5fa802c4636de10c175,"Merge pull request #809 from aslafy-z/patch-5  Properly capitalize ""SendGrid"" brand",packages/contact-importer/src/importer.js,"-  _worker (task, callback) {
++  _worker(task, callback) {
+-  _sendBatch (context, data, callback) {
++  _sendBatch(context, data, callback) {
+-    const request = context.sg.emptyRequest();
+-    request.method = 'POST';
+-    request.path = '/v3/contactdb/recipients';
+-    request.body = data;
++    const request = {
++      method: 'POST',
++      path: '/v3/contactdb/recipients',
++      body: data,
++    };
+-    context.sg.API(request)
+-      .then((response) => {
++    context.sg.request(request)
++      .then(([response]) => {
+-  _notify (error, result, batch) {
++  _notify(error, result, batch) {
+-  };
++  }
+-  _setupQueue () {
++  _setupQueue() {
+-      if (!this.pendingItems.length) return;
++      if (!this.pendingItems.length) {
++        return;
++      }
+-  _pushToQueue (batch) {
++  _pushToQueue(batch) {","-   * Send a batch of contacts to Sendgrid.
++   * Send a batch of contacts to SendGrid.","-   * Send a batch of contacts to Sendgrid.
++   * Send a batch of contacts to SendGrid.
+-  _worker (task, callback) {
++  _worker(task, callback) {
+-  _sendBatch (context, data, callback) {
++  _sendBatch(context, data, callback) {
+-    const request = context.sg.emptyRequest();
+-    request.method = 'POST';
+-    request.path = '/v3/contactdb/recipients';
+-    request.body = data;
++    const request = {
++      method: 'POST',
++      path: '/v3/contactdb/recipients',
++      body: data,
++    };
+-    context.sg.API(request)
+-      .then((response) => {
++    context.sg.request(request)
++      .then(([response]) => {
+-  _notify (error, result, batch) {
++  _notify(error, result, batch) {
+-  };
++  }
+-  _setupQueue () {
++  _setupQueue() {
+-      if (!this.pendingItems.length) return;
++      if (!this.pendingItems.length) {
++        return;
++      }
+-  _pushToQueue (batch) {
++  _pushToQueue(batch) {"
+sendgrid_sendgrid-nodejs,0220500cd54c44992099d0b06f3095a24c10befa,Merge pull request #502 from spelcaster/i496  Prevent secrets from sending in email,packages/mail/src/classes/mail-service.js,+        // eslint-disable-next-line callback-return,"-    //Set client and initialize substitution wrappers
++    //Set client, initialize substitution wrappers and secret rules
++    //filter
++    this.secretRules = [];
++  }
++
++  /**
++   * Set secret rules for filtering the e-mail content
++   */
++  setSecretRules(rules) {
++    if (!(rules instanceof Array)) {
++      rules = [rules];
++    }
++
++    const tmpRules = rules.map(function (rule) {
++      const ruleType = typeof rule;
++
++      if (ruleType === 'string') {
++        return {
++          pattern: new RegExp(rule)
++        };
++      } else if (ruleType === 'object') {
++        // normalize rule object
++        if (rule instanceof RegExp) {
++          rule = {
++            pattern: rule
++          }
++        } else if (rule.hasOwnProperty('pattern')
++          && (typeof rule.pattern === 'string')
++        ) {
++            rule.pattern = new RegExp(rule.pattern);
++        }
++
++        try {
++          // test if rule.pattern is a valid regex
++          rule.pattern.test('');
++          return rule
++        } catch (err) {
++        }
++      }
++    });
++
++    this.secretRules = tmpRules.filter(function (val) {
++      return val;
++    });
++  }
++
++  /**
++   * Check if the e-mail is safe to be sent
++   */
++  filterSecrets(body) {
++    if ((typeof body === 'object') && !body.hasOwnProperty('content')) {
++      return;
++    }
++
++    const self = this;
++
++    body.content.forEach(function (data) {
++      self.secretRules.forEach(function (rule) {
++        if (rule.hasOwnProperty('pattern')
++          && !rule.pattern.test(data.value)
++        ) {
++          return;
++        }
++
++        let message = `The pattern '${rule.pattern}'`;
++
++        if (rule.name) {
++          message += `identified by '${rule.name}'`;
++        }
++
++        message += ` was found in the Mail content!`;
++
++        throw new Error(message);
++      });
++    });
++
++      //Filters the Mail body to avoid sensitive content leakage
++      this.filterSecrets(body);","-    //Set client and initialize substitution wrappers
++    //Set client, initialize substitution wrappers and secret rules
++    //filter
++    this.secretRules = [];
++  }
++
++  /**
++   * Set secret rules for filtering the e-mail content
++   */
++  setSecretRules(rules) {
++    if (!(rules instanceof Array)) {
++      rules = [rules];
++    }
++
++    const tmpRules = rules.map(function (rule) {
++      const ruleType = typeof rule;
++
++      if (ruleType === 'string') {
++        return {
++          pattern: new RegExp(rule)
++        };
++      } else if (ruleType === 'object') {
++        // normalize rule object
++        if (rule instanceof RegExp) {
++          rule = {
++            pattern: rule
++          }
++        } else if (rule.hasOwnProperty('pattern')
++          && (typeof rule.pattern === 'string')
++        ) {
++            rule.pattern = new RegExp(rule.pattern);
++        }
++
++        try {
++          // test if rule.pattern is a valid regex
++          rule.pattern.test('');
++          return rule
++        } catch (err) {
++        }
++      }
++    });
++
++    this.secretRules = tmpRules.filter(function (val) {
++      return val;
++    });
++  }
++
++  /**
++   * Check if the e-mail is safe to be sent
++   */
++  filterSecrets(body) {
++    if ((typeof body === 'object') && !body.hasOwnProperty('content')) {
++      return;
++    }
++
++    const self = this;
++
++    body.content.forEach(function (data) {
++      self.secretRules.forEach(function (rule) {
++        if (rule.hasOwnProperty('pattern')
++          && !rule.pattern.test(data.value)
++        ) {
++          return;
++        }
++
++        let message = `The pattern '${rule.pattern}'`;
++
++        if (rule.name) {
++          message += `identified by '${rule.name}'`;
++        }
++
++        message += ` was found in the Mail content!`;
++
++        throw new Error(message);
++      });
++    });
++
++      //Filters the Mail body to avoid sensitive content leakage
++      this.filterSecrets(body);
++        // eslint-disable-next-line callback-return"
+sendgrid_sendgrid-nodejs,ed163d99b1b44b6c84dca1d5c5957c1cd462cb06,Merge pull request #583 from adamreisnz/cleanup  Fix readme instructions and replace stray tab indentation by spaces,packages/helpers/classes/attachment.js,"-    if (typeof content === 'undefined') {
+-      return;
++    //Duck type check toString on content if it's a Buffer as that's the method that will be called.
++    if (typeof content === 'string') {      
++      this.content = content;
++    } else if (content instanceof Buffer && content.toString !== undefined) {      
++      this.content = content.toString();
++    } else {
++      throw new Error('`content` expected to be either Buffer or string');
+-    if (typeof content !== 'string') {
+-      throw new Error('String expected for `content`');
+-    }
+-    this.content = content;
++
++    return;","-	/**
+-	 * Constructor
+-	 */
++  /**
++   * Constructor
++   */
+-	/**
+-	 * To JSON
+-	 */
++  /**
++   * To JSON
++   */","-	/**
+-	 * Constructor
+-	 */
++  /**
++   * Constructor
++   */
+-    if (typeof content === 'undefined') {
+-      return;
++    //Duck type check toString on content if it's a Buffer as that's the method that will be called.
++    if (typeof content === 'string') {      
++      this.content = content;
++    } else if (content instanceof Buffer && content.toString !== undefined) {      
++      this.content = content.toString();
++    } else {
++      throw new Error('`content` expected to be either Buffer or string');
+-    if (typeof content !== 'string') {
+-      throw new Error('String expected for `content`');
+-    }
+-    this.content = content;
++
++    return;    
+-	/**
+-	 * To JSON
+-	 */
++  /**
++   * To JSON
++   */"
+sendgrid_sendgrid-nodejs,6f0996ebd794fb1bc184b80b1eae5ed5268ff652,Merge branch 'master' into bug-moment-version-fix,package.json,"-    ""chai-as-promised"": ""^6.0.0"",
+-    ""dirty-chai"": ""^1.2.2"",
++    ""chai-as-promised"": ""^7.1.1"",
++    ""dirty-chai"": ""^2.0.1"",
++    ""moment"": ""^2.19.3"",","-    ""eslint"": ""^3.19.0"",
++    ""eslint"": ""^4.19.1"",","-    ""chai-as-promised"": ""^6.0.0"",
+-    ""dirty-chai"": ""^1.2.2"",
+-    ""eslint"": ""^3.19.0"",
++    ""chai-as-promised"": ""^7.1.1"",
++    ""dirty-chai"": ""^2.0.1"",
++    ""eslint"": ""^4.19.1"",
++    ""moment"": ""^2.19.3"","
+sendgrid_sendgrid-nodejs,aa1b1936bb69b8809db4c05baf938b47351b91a0,Merge branch 'master' into master,packages/helpers/classes/mail.js,"-    data = toCamelCase(data, ['substitutions', 'customArgs', 'headers']);
++    data = toCamelCase(data, ['substitutions', 'customArgs', 'headers', 'sections']);
+-    return toSnakeCase(json, ['substitutions', 'customArgs', 'headers']);
++    return toSnakeCase(json, ['substitutions', 'customArgs', 'headers', 'sections']);","+    this.isDynamic = false;
++    this.dynamicTemplateData = null;
+-    data = toCamelCase(data, ['substitutions', 'customArgs', 'headers']);
++    data = toCamelCase(data, ['substitutions', 'dynamicTemplateData', 'customArgs', 'headers']);
+-      trackingSettings, substitutions, substitutionWrappers, isMultiple,
++      trackingSettings, substitutions, substitutionWrappers, dynamicTemplateData, isMultiple,
+-    this.setSubstitutions(substitutions);
+-    this.setSubstitutionWrappers(substitutionWrappers);
++
++    if (this.isDynamic) {
++      this.setDynamicTemplateData(dynamicTemplateData)
++    } else {
++      this.setSubstitutions(substitutions);
++      this.setSubstitutionWrappers(substitutionWrappers);
++    }
+-   * Set template ID
++   * Set template ID, also checks if the template is dynamic or legacy
++
++    if (templateId.indexOf('d-') === 0) {
++      this.isDynamic = true;
++    }
++
++    //We should either send substitutions or dynamicTemplateData
++    //depending on the templateId
++    if (this.isDynamic && personalization.substitutions) {
++      delete personalization.substitutions;
++    } else if (personalization.dynamicTemplateData) {
++      delete personalization.dynamicTemplateData;
++    }
++
+-    //Apply substitutions and push to array
+-    this.applySubstitutions(personalization);
++    //If this is dynamic, set dynamicTemplateData, or set substitutions
++    if (this.isDynamic) {
++      this.applyDynamicTemplateData(personalization);
++    } else {
++      this.applySubstitutions(personalization);
++    }
++
++    //Push personalization to array
++   * Helper which applies globally set dynamic_template_data to personalizations
++   */
++  applyDynamicTemplateData(personalization) {
++    if (personalization instanceof Personalization) {
++      personalization.deepMergeDynamicTemplateData(this.dynamicTemplateData);
++    }
++  }
++
++  /**
++   * Set dynamicTemplateData
++   */
++  setDynamicTemplateData(dynamicTemplateData) {
++    if (typeof dynamicTemplateData === 'undefined') {
++      return;
++    }
++    if (typeof dynamicTemplateData !== 'object') {
++      throw new Error('Object expected for `dynamicTemplateData`');
++    }
++    this.dynamicTemplateData = dynamicTemplateData;
++  }
++
++  /**
+-        !categories.every(cat => typeof cat === 'string')) {
++      !categories.every(cat => typeof cat === 'string')) {
+-    return toSnakeCase(json, ['substitutions', 'customArgs', 'headers']);
++    return toSnakeCase(json, ['substitutions', 'dynamicTemplateData', 'customArgs', 'headers']);","+    this.isDynamic = false;
++    this.dynamicTemplateData = null;
+-    data = toCamelCase(data, ['substitutions', 'customArgs', 'headers']);
++    data = toCamelCase(data, ['substitutions', 'dynamicTemplateData', 'customArgs', 'headers', 'sections']);
+-      trackingSettings, substitutions, substitutionWrappers, isMultiple,
++      trackingSettings, substitutions, substitutionWrappers, dynamicTemplateData, isMultiple,
+-    this.setSubstitutions(substitutions);
+-    this.setSubstitutionWrappers(substitutionWrappers);
++
++    if (this.isDynamic) {
++      this.setDynamicTemplateData(dynamicTemplateData)
++    } else {
++      this.setSubstitutions(substitutions);
++      this.setSubstitutionWrappers(substitutionWrappers);
++    }
+-   * Set template ID
++   * Set template ID, also checks if the template is dynamic or legacy
++
++    if (templateId.indexOf('d-') === 0) {
++      this.isDynamic = true;
++    }
++
++    //We should either send substitutions or dynamicTemplateData
++    //depending on the templateId
++    if (this.isDynamic && personalization.substitutions) {
++      delete personalization.substitutions;
++    } else if (personalization.dynamicTemplateData) {
++      delete personalization.dynamicTemplateData;
++    }
++
+-    //Apply substitutions and push to array
+-    this.applySubstitutions(personalization);
++    //If this is dynamic, set dynamicTemplateData, or set substitutions
++    if (this.isDynamic) {
++      this.applyDynamicTemplateData(personalization);
++    } else {
++      this.applySubstitutions(personalization);
++    }
++
++    //Push personalization to array
++   * Helper which applies globally set dynamic_template_data to personalizations
++   */
++  applyDynamicTemplateData(personalization) {
++    if (personalization instanceof Personalization) {
++      personalization.deepMergeDynamicTemplateData(this.dynamicTemplateData);
++    }
++  }
++
++  /**
++   * Set dynamicTemplateData
++   */
++  setDynamicTemplateData(dynamicTemplateData) {
++    if (typeof dynamicTemplateData === 'undefined') {
++      return;
++    }
++    if (typeof dynamicTemplateData !== 'object') {
++      throw new Error('Object expected for `dynamicTemplateData`');
++    }
++    this.dynamicTemplateData = dynamicTemplateData;
++  }
++
++  /**
+-        !categories.every(cat => typeof cat === 'string')) {
++      !categories.every(cat => typeof cat === 'string')) {
+-    return toSnakeCase(json, ['substitutions', 'customArgs', 'headers']);
++    return toSnakeCase(json, ['substitutions', 'dynamicTemplateData', 'customArgs', 'headers', 'sections']);"
+sendgrid_sendgrid-nodejs,f11ddda711a919f6b9460dc85436e8421ebb5eb9,Merge pull request #605 from mukulmishra18/chai-version  Fixes #601: Chai dependency version issue.,package.json,"+    ""test:files"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""test/files.spec.js\"""",","-    ""chai"": ""^2.3.0"",
++    ""chai"": ""^4.0.1"",","+    ""test:files"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""test/files.spec.js\"""",
+-    ""chai"": ""^2.3.0"",
++    ""chai"": ""^4.0.1"","
+sendgrid_sendgrid-nodejs,ad7688a8af9d1df6837b5e64bf455cf81800f0be,Merge branch 'master' into expose-classes,packages/client/package.json,"-  ""main"": ""src/client.js"",
++  ""main"": ""index.js"",","-  ""version"": ""6.1.1"",
++  ""version"": ""6.1.5"",
+-    ""@sendgrid/helpers"": ""^6.1.1"",
++    ""@sendgrid/helpers"": ""^6.1.5"",","-  ""version"": ""6.1.1"",
++  ""version"": ""6.1.5"",
+-  ""main"": ""src/client.js"",
++  ""main"": ""index.js"",
+-    ""@sendgrid/helpers"": ""^6.1.1"",
++    ""@sendgrid/helpers"": ""^6.1.5"","
+sendgrid_sendgrid-nodejs,ad7688a8af9d1df6837b5e64bf455cf81800f0be,Merge branch 'master' into expose-classes,packages/mail/package.json,"-  ""main"": ""src/mail.js"",
++  ""main"": ""index.js"",","-  ""version"": ""6.1.1"",
++  ""version"": ""6.1.5"",
+-    ""@sendgrid/client"": ""^6.1.1"",
+-    ""@sendgrid/helpers"": ""^6.1.1""
++    ""@sendgrid/client"": ""^6.1.5"",
++    ""@sendgrid/helpers"": ""^6.1.5""","-  ""version"": ""6.1.1"",
++  ""version"": ""6.1.5"",
+-  ""main"": ""src/mail.js"",
++  ""main"": ""index.js"",
+-    ""@sendgrid/client"": ""^6.1.1"",
+-    ""@sendgrid/helpers"": ""^6.1.1""
++    ""@sendgrid/client"": ""^6.1.5"",
++    ""@sendgrid/helpers"": ""^6.1.5"""
+sendgrid_sendgrid-nodejs,5d2943ff914c56308a14e091838f64d17b9d511b,Merge branch 'master' into enhacement/es6-ify-inboundMailParser,package.json,"+    ""test:inbound"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/inbound-mail-parser/**/*.spec.js\"""",","-    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/**/*.spec.js\"""",
++    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""**/*.spec.js\"""",
++    ""test:contact"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/contact-importer/**/*.spec.js\"""",
++    ""test:license"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha license.spec.js"",
+-  }
++  },
++  ""description"": ""![SendGrid Logo](https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)"",
++  ""bugs"": {
++    ""url"": ""https://github.com/sendgrid/sendgrid-nodejs/issues""
++  },
++  ""homepage"": ""https://github.com/sendgrid/sendgrid-nodejs#readme"",
++  ""main"": ""index.js"",
++  ""directories"": {
++    ""doc"": ""docs"",
++    ""test"": ""test""
++  },
++  ""dependencies"": {
++    ""chai"": ""^2.3.0"",
++    ""esdoc"": ""^1.0.3"",
++    ""esdoc-coverage-plugin"": ""^1.1.0"",
++    ""esdoc-type-inference-plugin"": ""^1.0.1""
++  },
++  ""author"": ""SendGrid""","-    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/**/*.spec.js\"""",
++    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""**/*.spec.js\"""",
++    ""test:inbound"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/inbound-mail-parser/**/*.spec.js\"""",
++    ""test:contact"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/contact-importer/**/*.spec.js\"""",
++    ""test:license"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha license.spec.js"",
+-  }
++  },
++  ""description"": ""![SendGrid Logo](https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)"",
++  ""bugs"": {
++    ""url"": ""https://github.com/sendgrid/sendgrid-nodejs/issues""
++  },
++  ""homepage"": ""https://github.com/sendgrid/sendgrid-nodejs#readme"",
++  ""main"": ""index.js"",
++  ""directories"": {
++    ""doc"": ""docs"",
++    ""test"": ""test""
++  },
++  ""dependencies"": {
++    ""chai"": ""^2.3.0"",
++    ""esdoc"": ""^1.0.3"",
++    ""esdoc-coverage-plugin"": ""^1.1.0"",
++    ""esdoc-type-inference-plugin"": ""^1.0.1""
++  },
++  ""author"": ""SendGrid"""
+sendgrid_sendgrid-nodejs,5d2943ff914c56308a14e091838f64d17b9d511b,Merge branch 'master' into enhacement/es6-ify-inboundMailParser,packages/inbound-mail-parser/src/parser.js,"-function createAttachment(file) {
++const createAttachment = (file) => {
+- * @constructor
+- * @param {Object} config inbound configuration object
+- * @param {Object} request request object of the parse webhook payload
+-function Parse(config, request) {
+-  this.keys = config.keys;
+-  this.request = request;
+-  this.payload = request.body || {};
+-  this.files = request.files || [];
++class Parse {
++
++  /**
++   * @constructor
++   * @param {Object} config inbound configuration object
++   * @param {Object} request request object of the parse webhook payload
++   */
++  constructor(config, request) {
++    this.keys = config.keys;
++    this.request = request;
++    this.payload = request.body || {};
++    this.files = request.files || [];
++  }
++
++  /**
++   * Return an object literal of key/values in the payload received from webhook
++   * @return {Object} Valid key/values in the webhook payload
++   */
++  keyValues() {
++    return this.keys
++      .filter(key => this.payload[key])
++      .map(key => ({ [key]: this.payload[key] }))
++      .reduce((keyValues, keyPayload) => Object.assign(keyValues, keyPayload));
++  }
++
++  /**
++   * Whether the payload contains the raw email (Only applies to raw payloads)
++   * @return {Boolean}
++   */
++  hasRawEmail() {
++    return !!this.payload.email;
++  }
++
++  /**
++   * Parses the raw email and returns the mail object in a callback (Only applies to raw payloads)
++   * @param {Function} callback Function which will receive the parsed email object as the sole argument
++   */
++  getRawEmail(callback) {
++    const mailparser = new MailParser();
++    const { rawEmail } = this.payload;
++
++    if (!this.hasRawEmail()) {
++      return callback(null);
++    }
++
++    mailparser.on('end', callback);
++    mailparser.write(rawEmail);
++    mailparser.end();
++  }
++
++  /**
++   * Retrieves all attachments received from the webhook payload
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  attachments(callback) {
++    return this[`_getAttachments${this.hasRawEmail() ? 'Raw' : ''}`](callback);
++  }
++
++  /**
++   * Parses raw email to retrieve any encoded attachments (Only applies to raw payloads)
++   * @private
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  _getAttachmentsRaw(callback) {
++    this.getRawEmail(parsedEmail => {
++      const attachments = (parsedEmail || {}).attachments || [];
++      callback(attachments.map(createAttachment));
++    });
++  }
++
++  /**
++   * Retrieves webhook payload files from the file system (Only applies to non raw payloads)
++   * @private
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  _getAttachments(callback) {
++    return callback(this.files
++      .filter(file => fs.existsSync(file.path))
++      .map((exists, idx) => [exists, this.files[idx]])
++      .filter(([exists, _]) => exists)
++      .map(([_, file]) => {
++        file.content = fs.readFileSync(file.path);
++        return createAttachment(file);
++      })
++    );
++  }
+-/**
+- * Return an object literal of key/values in the payload received from webhook
+- * @return {Object} Valid key/values in the webhook payload
+- */
+-Parse.prototype.keyValues = function() {
+-  const keyValues = {};
+-  let key;
+-
+-  for (const index in this.keys) {
+-    key = this.keys[index];
+-
+-    if (this.payload[key]) {
+-      keyValues[key] = this.payload[key];
+-    }
+-  }
+-
+-  return keyValues;
+-};
+-
+-/**
+- * Whether the payload contains the raw email (Only applies to raw payloads)
+- * @return {Boolean}
+- */
+-Parse.prototype.hasRawEmail = function() {
+-  return Boolean(this.payload.email);
+-};
+-
+-/**
+- * Parses the raw email and returns the mail object in a callback (Only applies to raw payloads)
+- * @param {Function} callback Function which will receive the parsed email object as the sole argument
+- */
+-Parse.prototype.getRawEmail = function(callback) {
+-  const mailparser = new MailParser();
+-  const rawEmail = this.payload.email;
+-
+-  if (!rawEmail) {
+-    return callback(null);
+-  }
+-
+-  mailparser.on('end', callback);
+-
+-  mailparser.write(rawEmail);
+-  mailparser.end();
+-};
+-
+-/**
+- * Retrieves all attachments received from the webhook payload
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype.attachments = function(callback) {
+-  if (this.hasRawEmail()) {
+-    return this._getAttachmentsRaw(callback);
+-  }
+-
+-  this._getAttachments(callback);
+-};
+-
+-/**
+- * Parses raw email to retrieve any encoded attachments (Only applies to raw payloads)
+- * @private
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype._getAttachmentsRaw = function(callback) {
+-  this.getRawEmail(function(parsedEmail) {
+-    if (!parsedEmail || !parsedEmail.attachments) {
+-      return callback([]);
+-    }
+-
+-    const attachments = parsedEmail.attachments.map(function(file) {
+-      return createAttachment(file);
+-    });
+-
+-    callback(attachments);
+-  });
+-};
+-
+-/**
+- * Retrieves webhook payload files from the file system (Only applies to non raw payloads)
+- * @private
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype._getAttachments = function(callback) {
+-  let file;
+-  const attachments = [];
+-
+-  for (const index in this.files) {
+-    file = this.files[index];
+-
+-    if (fs.existsSync(file.path)) {
+-      file.content = fs.readFileSync(file.path);
+-      attachments.push(createAttachment(file));
+-    }
+-  }
+-
+-  return callback(attachments);
+-};
+-","-const MailParser = require('mailparser').MailParser;
++const { MailParser } = require('mailparser');
+-function createAttachment(file) {
++function createAttachment({originalname, fileName, mimetype, contentType, content}) {
+-  attachment.setFilename(file.originalname || file.fileName);
+-  attachment.setType(file.mimetype || file.contentType);
+-  attachment.setContent(file.content.toString('base64'));
++  attachment.setFilename(originalname || fileName);
++  attachment.setType(mimetype || contentType);
++  attachment.setContent(content.toString('base64'));
+-function Parse(config, request) {
+-  this.keys = config.keys;
++function Parse({ keys }, request) {
++  this.keys = keys;
+-  const rawEmail = this.payload.email;
++  const { email:rawEmail } = this.payload;
+-  this.getRawEmail(function(parsedEmail) {
++  this.getRawEmail(parsedEmail => {
+-    const attachments = parsedEmail.attachments.map(function(file) {
+-      return createAttachment(file);
+-    });
++    const attachments = parsedEmail.attachments.map(file => createAttachment(file));
++    const { path } = file;
+-    if (fs.existsSync(file.path)) {
+-      file.content = fs.readFileSync(file.path);
++    if (fs.existsSync(path)) {
++      file.content = fs.readFileSync(path);","-const MailParser = require('mailparser').MailParser;
++const { MailParser } = require('mailparser');
+-function createAttachment(file) {
++const createAttachment = (file) => {
++  const {originalname, fileName, mimetype, contentType, content} = file;
+-  attachment.setFilename(file.originalname || file.fileName);
+-  attachment.setType(file.mimetype || file.contentType);
+-  attachment.setContent(file.content.toString('base64'));
++  attachment.setFilename(originalname || fileName);
++  attachment.setType(mimetype || contentType);
++  attachment.setContent(content.toString('base64'));
+- * @constructor
+- * @param {Object} config inbound configuration object
+- * @param {Object} request request object of the parse webhook payload
+-function Parse(config, request) {
+-  this.keys = config.keys;
+-  this.request = request;
+-  this.payload = request.body || {};
+-  this.files = request.files || [];
++class Parse {
++
++  /**
++   * @constructor
++   * @param {Object} config inbound configuration object
++   * @param {Object} request request object of the parse webhook payload
++   */
++  constructor(config, request) {
++    this.keys = config.keys;
++    this.request = request;
++    this.payload = request.body || {};
++    this.files = request.files || [];
++  }
++
++  /**
++   * Return an object literal of key/values in the payload received from webhook
++   * @return {Object} Valid key/values in the webhook payload
++   */
++  keyValues() {
++    return this.keys
++      .filter(key => this.payload[key])
++      .map(key => ({ [key]: this.payload[key] }))
++      .reduce((keyValues, keyPayload) => Object.assign(keyValues, keyPayload));
++  }
++
++  /**
++   * Whether the payload contains the raw email (Only applies to raw payloads)
++   * @return {Boolean}
++   */
++  hasRawEmail() {
++    return !!this.payload.email;
++  }
++
++  /**
++   * Parses the raw email and returns the mail object in a callback (Only applies to raw payloads)
++   * @param {Function} callback Function which will receive the parsed email object as the sole argument
++   */
++  getRawEmail(callback) {
++    const mailparser = new MailParser();
++    const { rawEmail } = this.payload;
++
++    if (!this.hasRawEmail()) {
++      return callback(null);
++    }
++
++    mailparser.on('end', callback);
++    mailparser.write(rawEmail);
++    mailparser.end();
++  }
++
++  /**
++   * Retrieves all attachments received from the webhook payload
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  attachments(callback) {
++    return this[`_getAttachments${this.hasRawEmail() ? 'Raw' : ''}`](callback);
++  }
++
++  /**
++   * Parses raw email to retrieve any encoded attachments (Only applies to raw payloads)
++   * @private
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  _getAttachmentsRaw(callback) {
++    this.getRawEmail(parsedEmail => {
++      const attachments = (parsedEmail || {}).attachments || [];
++      callback(attachments.map(createAttachment));
++    });
++  }
++
++  /**
++   * Retrieves webhook payload files from the file system (Only applies to non raw payloads)
++   * @private
++   * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
++   */
++  _getAttachments(callback) {
++    return callback(this.files
++      .filter(file => fs.existsSync(file.path))
++      .map((exists, idx) => [exists, this.files[idx]])
++      .filter(([exists, _]) => exists)
++      .map(([_, file]) => {
++        file.content = fs.readFileSync(file.path);
++        return createAttachment(file);
++      })
++    );
++  }
+-/**
+- * Return an object literal of key/values in the payload received from webhook
+- * @return {Object} Valid key/values in the webhook payload
+- */
+-Parse.prototype.keyValues = function() {
+-  const keyValues = {};
+-  let key;
+-
+-  for (const index in this.keys) {
+-    key = this.keys[index];
+-
+-    if (this.payload[key]) {
+-      keyValues[key] = this.payload[key];
+-    }
+-  }
+-
+-  return keyValues;
+-};
+-
+-/**
+- * Whether the payload contains the raw email (Only applies to raw payloads)
+- * @return {Boolean}
+- */
+-Parse.prototype.hasRawEmail = function() {
+-  return Boolean(this.payload.email);
+-};
+-
+-/**
+- * Parses the raw email and returns the mail object in a callback (Only applies to raw payloads)
+- * @param {Function} callback Function which will receive the parsed email object as the sole argument
+- */
+-Parse.prototype.getRawEmail = function(callback) {
+-  const mailparser = new MailParser();
+-  const rawEmail = this.payload.email;
+-
+-  if (!rawEmail) {
+-    return callback(null);
+-  }
+-
+-  mailparser.on('end', callback);
+-
+-  mailparser.write(rawEmail);
+-  mailparser.end();
+-};
+-
+-/**
+- * Retrieves all attachments received from the webhook payload
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype.attachments = function(callback) {
+-  if (this.hasRawEmail()) {
+-    return this._getAttachmentsRaw(callback);
+-  }
+-
+-  this._getAttachments(callback);
+-};
+-
+-/**
+- * Parses raw email to retrieve any encoded attachments (Only applies to raw payloads)
+- * @private
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype._getAttachmentsRaw = function(callback) {
+-  this.getRawEmail(function(parsedEmail) {
+-    if (!parsedEmail || !parsedEmail.attachments) {
+-      return callback([]);
+-    }
+-
+-    const attachments = parsedEmail.attachments.map(function(file) {
+-      return createAttachment(file);
+-    });
+-
+-    callback(attachments);
+-  });
+-};
+-
+-/**
+- * Retrieves webhook payload files from the file system (Only applies to non raw payloads)
+- * @private
+- * @param {Function} callback Function which will receive an array, of attachments found, as the sole argument
+- */
+-Parse.prototype._getAttachments = function(callback) {
+-  let file;
+-  const attachments = [];
+-
+-  for (const index in this.files) {
+-    file = this.files[index];
+-
+-    if (fs.existsSync(file.path)) {
+-      file.content = fs.readFileSync(file.path);
+-      attachments.push(createAttachment(file));
+-    }
+-  }
+-
+-  return callback(attachments);
+-};
+-"
+sendgrid_sendgrid-nodejs,22b66cf84d7d3601d011195b4d5caff202826c03,Merge pull request #549 from sendgrid/esdoc  Added esdoc support,package.json,"+    ""test:contact"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/contact-importer/**/*.spec.js\"""",","-  }
++  },
++  ""description"": ""![SendGrid Logo](https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)"",
++  ""bugs"": {
++    ""url"": ""https://github.com/sendgrid/sendgrid-nodejs/issues""
++  },
++  ""homepage"": ""https://github.com/sendgrid/sendgrid-nodejs#readme"",
++  ""main"": ""index.js"",
++  ""directories"": {
++    ""doc"": ""docs"",
++    ""test"": ""test""
++  },
++  ""dependencies"": {
++    ""chai"": ""^2.3.0"",
++    ""esdoc"": ""^1.0.3"",
++    ""esdoc-coverage-plugin"": ""^1.1.0"",
++    ""esdoc-type-inference-plugin"": ""^1.0.1""
++  },
++  ""author"": ""SendGrid""","+    ""test:contact"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/contact-importer/**/*.spec.js\"""",
+-  }
++  },
++  ""description"": ""![SendGrid Logo](https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)"",
++  ""bugs"": {
++    ""url"": ""https://github.com/sendgrid/sendgrid-nodejs/issues""
++  },
++  ""homepage"": ""https://github.com/sendgrid/sendgrid-nodejs#readme"",
++  ""main"": ""index.js"",
++  ""directories"": {
++    ""doc"": ""docs"",
++    ""test"": ""test""
++  },
++  ""dependencies"": {
++    ""chai"": ""^2.3.0"",
++    ""esdoc"": ""^1.0.3"",
++    ""esdoc-coverage-plugin"": ""^1.1.0"",
++    ""esdoc-type-inference-plugin"": ""^1.0.1""
++  },
++  ""author"": ""SendGrid"""
+sendgrid_sendgrid-nodejs,233102596de3fba89961f3a4d9e3f62b8886acfe,Merge pull request #442 from adamreisnz/issue-441  Issue 441,packages/helpers/classes/mail.js,"-      from, subject, content,
++      from, subject,
++    }
++    if (Array.isArray(content) && content.length > 0) {
++      json.content = arrayToJSON(content);","-    data = toCamelCase(data);
++    data = toCamelCase(data, ['substitutions', 'customArgs']);
+-    return toSnakeCase(json);
++    return toSnakeCase(json, ['substitutions', 'customArgs']);","-    data = toCamelCase(data);
++    data = toCamelCase(data, ['substitutions', 'customArgs']);
+-      from, subject, content,
++      from, subject,
++    if (Array.isArray(content) && content.length > 0) {
++      json.content = arrayToJSON(content);
++    }
+-    return toSnakeCase(json);
++    return toSnakeCase(json, ['substitutions', 'customArgs']);"
+sendgrid_sendgrid-nodejs,3064ce1746007a024a12eb21c48099aba16f48ef,Merge remote-tracking branch 'origin/monorepo' into monorepo  # Conflicts: #	packages/helpers/classes/personalization.spec.js,packages/helpers/classes/personalization.spec.js,"-      expect(function() {
+-        p.setSubstitutions(null);
+-      }).to.throw(Error);
+-      }).to.throw(Error);
+-      expect(function() {
+-        p.reverseMergeSubstitutions(null);","-        p.setSubstitutions('Invalid');
+-      }).to.throw(Error);
+-      expect(function() {
+-        p.setSubstitutions(null);
++        p.setSubstitutions(3);
+-      }).to.throw(Error);
+-      expect(function() {
+-        p.reverseMergeSubstitutions(null);","-        p.setSubstitutions(null);
++        p.setSubstitutions(3);
+-      }).to.throw(Error);
+-      expect(function() {
+-        p.reverseMergeSubstitutions(null);"
+sendgrid_sendgrid-nodejs,56b72bb309a4beeae442d118c58453dea453235b,Merge branch 'monorepo' of https://github.com/adamreisnz/sendgrid-nodejs into adamreisnz-monorepo,packages/client/package.json,"-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.2"",","-    ""@sendgrid/helpers"": ""^6.0.0"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3"",","-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.2"",
+-    ""@sendgrid/helpers"": ""^6.0.0"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3"","
+sendgrid_sendgrid-nodejs,0540c8277bfb8a77e819cd537f19bd337ab7a8ef,Fix merge conflicts,packages/client/package.json,"-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.4"",","-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.2"",","-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.2"","
+sendgrid_sendgrid-nodejs,0540c8277bfb8a77e819cd537f19bd337ab7a8ef,Fix merge conflicts,packages/mail/package.json,"-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.4"",
+-    ""@sendgrid/client"": ""^6.0.0-beta.3"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.3""
++    ""@sendgrid/client"": ""^6.0.0-beta.4"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.4""","-    ""@sendgrid/client"": ""^6.0.0-beta.3"",
++    ""@sendgrid/client"": ""^6.0.0-beta.2"",","-  ""version"": ""6.0.0-beta.3"",
++  ""version"": ""6.0.0-beta.4"",
+-    ""@sendgrid/client"": ""^6.0.0-beta.3"",
++    ""@sendgrid/client"": ""^6.0.0-beta.2"","
+sendgrid_sendgrid-nodejs,f6fce7391c27e0126f0b53acd91c71ea08bb6424,v6.0.0-beta.3,lerna.json,"-  ""version"": ""6.0.0-beta.0""
++  ""version"": ""6.0.0-beta.2""","-  ""version"": ""6.0.0-beta.0""
++  ""version"": ""6.0.0-beta.3""","-  ""version"": ""6.0.0-beta.0""
++  ""version"": ""6.0.0-beta.3"""
+sendgrid_sendgrid-nodejs,f6fce7391c27e0126f0b53acd91c71ea08bb6424,v6.0.0-beta.3,packages/helpers/package.json,"-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.2"",","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"",","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"","
+sendgrid_sendgrid-nodejs,f6fce7391c27e0126f0b53acd91c71ea08bb6424,v6.0.0-beta.3,packages/inbound-mail-parser/package.json,"-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.2"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.2"",","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3"",","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3"","
+sendgrid_sendgrid-nodejs,f6fce7391c27e0126f0b53acd91c71ea08bb6424,v6.0.0-beta.3,packages/mail/package.json,"-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.2"",
+-    ""@sendgrid/client"": ""^6.0.0-beta.0"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0""
++    ""@sendgrid/client"": ""^6.0.0-beta.2"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.2""","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"",
+-    ""@sendgrid/client"": ""^6.0.0-beta.0"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0""
++    ""@sendgrid/client"": ""^6.0.0-beta.3"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3""","-  ""version"": ""6.0.0-beta.0"",
++  ""version"": ""6.0.0-beta.3"",
+-    ""@sendgrid/client"": ""^6.0.0-beta.0"",
+-    ""@sendgrid/helpers"": ""^6.0.0-beta.0""
++    ""@sendgrid/client"": ""^6.0.0-beta.2"",
++    ""@sendgrid/helpers"": ""^6.0.0-beta.3"""
+sendgrid_sendgrid-nodejs,28dc04b4e0be2bbd21d895b31901df9134727981,v6.0.0-beta.2,package.json,"-  ""version"": ""5.1.0"",
++  ""version"": ""5.1.2"",","-  ""author"": ""SendGrid <dx@sendgrid.com> (sendgrid.com)"",
+-  ""contributors"": [
+-    ""Kyle Partridge <kyle.partridge@sendgrid.com>"",
+-    ""David Tomberlin <david.tomberlin@sendgrid.com>"",
+-    ""Swift <swift@sendgrid.com>"",
+-    ""Brandon West <brandon.west@sendgrid.com>"",
+-    ""Scott Motte <scott.motte@sendgrid.com>"",
+-    ""Robert Acosta <robert.acosta@sendgrid.com>"",
+-    ""Elmer Thomas <elmer.thomas@sendgrid.com>"",
+-    ""Adam Buczynski <me@adambuczynski.com>""
+-  ],
+-  ""description"": ""Official SendGrid NodeJS library."",
+-  ""version"": ""5.1.0"",
+-  ""homepage"": ""https://sendgrid.com"",
++  ""version"": ""6.0.0"",
++  ""private"": false,
++  ""license"": ""SEE LICENSE IN LICENSE.md"",
+-  ""engines"": {
+-    ""node"": "">= 4.0.0""
+-  },
+-  ""dependencies"": {
+-    ""async.ensureasync"": ""^0.5.2"",
+-    ""async.queue"": ""^0.5.2"",
+-    ""bottleneck"": ""^1.12.0"",
+-    ""debug"": ""^2.2.0"",
+-    ""lodash.chunk"": ""^4.2.0"",
+-    ""mailparser"": ""^0.6.1"",
+-    ""sendgrid-rest"": ""^2.3.0""
+-  },
+-    ""chai"": ""^3.5.0"",
+-    ""eslint"": ""^3.1.0"",
+-    ""mocha"": ""^2.4.5"",
+-    ""mocha-sinon"": ""^1.1.5"",
+-    ""sinon"": ""^1.17.5"",
+-    ""sinon-chai"": ""^2.8.0"",
+-    ""system-sleep"": ""^1.0.0-g"",
+-    ""typescript"": ""^2.0.0""
++    ""babel-cli"": ""^6.24.1"",
++    ""babel-preset-es2015"": ""^6.24.1"",
++    ""chai"": ""^4.0.1"",
++    ""chai-as-promised"": ""^6.0.0"",
++    ""dirty-chai"": ""^1.2.2"",
++    ""eslint"": ""^3.19.0"",
++    ""istanbul"": ""^1.0.0-alpha.2"",
++    ""lerna"": ""^2.0.0-rc.5"",
++    ""mocha"": ""^3.4.2"",
++    ""mocha-clean"": ""^1.0.0"",
++    ""mocha-sinon"": ""^2.0.0"",
++    ""sinon"": ""^2.3.2"",
++    ""sinon-chai"": ""^2.10.0""
+-    ""test"": ""mocha"",
+-    ""test:typescript"": ""tsc""
+-  },
+-  ""typings"": ""index.d.ts"",
+-  ""tags"": [
+-    ""http"",
+-    ""rest"",
+-    ""api""
+-  ],
+-  ""license"": ""MIT"",
+-  ""optionalDependencies"": {}
++    ""prism:install"": ""curl https://raw.githubusercontent.com/stoplightio/prism/master/install.sh | sh"",
++    ""prism"": ""prism run --mock --list --spec https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json"",
++    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/**/*.spec.js\"""",
++    ""test:helpers"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/helpers/**/*.spec.js\"""",
++    ""test:client"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/client/**/*.spec.js\"""",
++    ""test:mail"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/mail/**/*.spec.js\"""",
++    ""test"": ""npm run test:all -s"",
++    ""coverage"": ""open -a \""Google Chrome\"" ./coverage/lcov-report/index.html""
++  }","-  ""author"": ""SendGrid <dx@sendgrid.com> (sendgrid.com)"",
+-  ""contributors"": [
+-    ""Kyle Partridge <kyle.partridge@sendgrid.com>"",
+-    ""David Tomberlin <david.tomberlin@sendgrid.com>"",
+-    ""Swift <swift@sendgrid.com>"",
+-    ""Brandon West <brandon.west@sendgrid.com>"",
+-    ""Scott Motte <scott.motte@sendgrid.com>"",
+-    ""Robert Acosta <robert.acosta@sendgrid.com>"",
+-    ""Elmer Thomas <elmer.thomas@sendgrid.com>"",
+-    ""Adam Buczynski <me@adambuczynski.com>""
+-  ],
+-  ""version"": ""5.1.0"",
++  ""version"": ""6.0.0"",
++  ""private"": false,
++  ""license"": ""SEE LICENSE IN LICENSE.md"",
+-  ""engines"": {
+-    ""node"": "">= 4.0.0""
+-  },
+-  ""dependencies"": {
+-    ""async.ensureasync"": ""^0.5.2"",
+-    ""async.queue"": ""^0.5.2"",
+-    ""bottleneck"": ""^1.12.0"",
+-    ""debug"": ""^2.2.0"",
+-    ""lodash.chunk"": ""^4.2.0"",
+-    ""mailparser"": ""^0.6.1"",
+-    ""sendgrid-rest"": ""^2.3.0""
+-  },
+-    ""chai"": ""^3.5.0"",
+-    ""eslint"": ""^3.1.0"",
+-    ""mocha"": ""^2.4.5"",
+-    ""mocha-sinon"": ""^1.1.5"",
+-    ""sinon"": ""^1.17.5"",
+-    ""sinon-chai"": ""^2.8.0"",
+-    ""system-sleep"": ""^1.0.0-g"",
+-    ""typescript"": ""^2.0.0""
++    ""babel-cli"": ""^6.24.1"",
++    ""babel-preset-es2015"": ""^6.24.1"",
++    ""chai"": ""^4.0.1"",
++    ""chai-as-promised"": ""^6.0.0"",
++    ""dirty-chai"": ""^1.2.2"",
++    ""eslint"": ""^3.19.0"",
++    ""istanbul"": ""^1.0.0-alpha.2"",
++    ""lerna"": ""^2.0.0-rc.5"",
++    ""mocha"": ""^3.4.2"",
++    ""mocha-clean"": ""^1.0.0"",
++    ""mocha-sinon"": ""^2.0.0"",
++    ""sinon"": ""^2.3.2"",
++    ""sinon-chai"": ""^2.10.0""
+-    ""test"": ""mocha"",
+-    ""test:typescript"": ""tsc""
+-  },
+-  ""typings"": ""index.d.ts"",
+-  ""tags"": [
+-    ""http"",
+-    ""rest"",
+-    ""api""
+-  ],
+-  ""license"": ""MIT"",
+-  ""optionalDependencies"": {}
++    ""prism:install"": ""curl https://raw.githubusercontent.com/stoplightio/prism/master/install.sh | sh"",
++    ""prism"": ""prism run --mock --list --spec https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json"",
++    ""test:all"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/**/*.spec.js\"""",
++    ""test:helpers"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/helpers/**/*.spec.js\"""",
++    ""test:client"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/client/**/*.spec.js\"""",
++    ""test:mail"": ""babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha \""packages/mail/**/*.spec.js\"""",
++    ""test"": ""npm run test:all -s"",
++    ""coverage"": ""open -a \""Google Chrome\"" ./coverage/lcov-report/index.html""
++  }"
+sendgrid_sendgrid-nodejs,71743d644897ade37ee4afd14840a793ac0736bc,Packing things up,packages/client/package.json,"-  ""name"": ""@sendgrid/client"",
++  ""name"": ""sendgrid-client"",
+-  ""version"": ""6.0.0"",
++  ""version"": ""6.0.0-beta"",","-    ""http-as-promised"": ""^1.1.0""
++    ""@sendgrid/support"": ""^6.0.0"",
++    ""request"": ""^2.81.0""","-  ""name"": ""@sendgrid/client"",
++  ""name"": ""sendgrid-client"",
+-  ""version"": ""6.0.0"",
++  ""version"": ""6.0.0-beta"",
+-    ""http-as-promised"": ""^1.1.0""
++    ""@sendgrid/support"": ""^6.0.0"",
++    ""request"": ""^2.81.0"""
+sendgrid_sendgrid-nodejs,83507768ffb4575a9c7626157d5aaca049c98969,Merge branch 'master' into patch-1,package.json,"+    ""system-sleep"": ""^1.0.0-g"",","-  ""version"": ""4.7.0"",
++  ""version"": ""5.0.1"",
+-    ""node"": "">= 0.4.7""
++    ""node"": "">= 4.0.0""
++    ""mailparser"": ""^0.6.1"",","-  ""version"": ""4.7.0"",
++  ""version"": ""5.0.1"",
+-    ""node"": "">= 0.4.7""
++    ""node"": "">= 4.0.0""
++    ""mailparser"": ""^0.6.1"",
++    ""system-sleep"": ""^1.0.0-g"","
+sendgrid_sendgrid-nodejs,83507768ffb4575a9c7626157d5aaca049c98969,Merge branch 'master' into patch-1,test/test.js,"+var fs = require('fs');
++var execSync = require('child_process').execSync;
++var spawn = require('child_process').spawn;
++
++var sleep = require('system-sleep');
++
++var prism;
++var TEST_TIMEOUT_MS = 30000;
++var PRISM_SETUP_MS = 2000;
++var PRISM_STARTUP_MS = 20000;
++
++before(function() {
++  this.timeout(Math.max(PRISM_SETUP_MS + PRISM_STARTUP_MS, TEST_TIMEOUT_MS));
++  if (!fs.existsSync('/usr/local/bin/prism')) {
++    if (process.platform != 'win32') {
++      try {
++        execSync('test/prism.sh');
++      }
++      catch (e) {
++        console.log(e.message);
++        console.log('Error downloading the prism binary, you can try downloading directly here (https://github.com/stoplightio/prism/releases) and placing it in your /user/local/bin directory');
++        process.exit(1);
++      }
++    }
++    else {
++      console.log('Please download the Windows binary (https://github.com/stoplightio/prism/releases) and place it in your /usr/local/bin directory');
++      process.exit(1);
++    }
++  }
++  console.log('Activating Prism (~20s)');
++  prism = spawn('prism', ['run', '--mock', '--list', '--spec', 'https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json'], { detached: true });
++  console.log('Prism Started');
++  sleep(PRISM_STARTUP_MS);
++  prism.stdout.on('data', function(data) {
++    console.log(data.toString());
++  });
++  prism.stderr.on('data', function(data) {
++    console.log(data.toString());
++  });
++});
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
++
++after(function() {
++  prism.kill();
++})","-describe('test_suppression_spam_report__email__get', function () {
+-  this.timeout(30000);
+-  var API_KEY = 'SendGrid API Key'
+-  if(process.env.TRAVIS) {
+-    var TEST_HOST = process.env.MOCK_HOST
+-  } else {
+-    var TEST_HOST = 'localhost'
+-  }
+-
+-  var sg = sendgrid(API_KEY, TEST_HOST)
+-
+-  var request = sg.emptyRequest()
+-  if(TEST_HOST == 'localhost') {
+-    request.test = true
+-    request.port = 4010
+-  }
+-  request.method = 'GET'
+-  request.path = '/v3/suppression/spam_report/{email}'
+-  request.headers['X-Mock'] = 200
+-  it('test_suppression_spam_report__email__get had the correct response code', function(done) {
++describe('test_suppression_spam_reports__email__get', function () {
++  this.timeout(30000);
++  var API_KEY = 'SendGrid API Key'
++  if(process.env.TRAVIS) {
++    var TEST_HOST = process.env.MOCK_HOST
++  } else {
++    var TEST_HOST = 'localhost'
++  }
++
++  var sg = sendgrid(API_KEY, TEST_HOST)
++
++  var request = sg.emptyRequest()
++  if(TEST_HOST == 'localhost') {
++    request.test = true
++    request.port = 4010
++  }
++  request.method = 'GET'
++  request.path = '/v3/suppression/spam_reports/{email}'
++  request.headers['X-Mock'] = 200
++  it('test_suppression_spam_reports__email__get had the correct response code', function(done) {","+var fs = require('fs');
++var execSync = require('child_process').execSync;
++var spawn = require('child_process').spawn;
++
++var sleep = require('system-sleep');
++
++var prism;
++var TEST_TIMEOUT_MS = 30000;
++var PRISM_SETUP_MS = 2000;
++var PRISM_STARTUP_MS = 20000;
++
++before(function() {
++  this.timeout(Math.max(PRISM_SETUP_MS + PRISM_STARTUP_MS, TEST_TIMEOUT_MS));
++  if (!fs.existsSync('/usr/local/bin/prism')) {
++    if (process.platform != 'win32') {
++      try {
++        execSync('test/prism.sh');
++      }
++      catch (e) {
++        console.log(e.message);
++        console.log('Error downloading the prism binary, you can try downloading directly here (https://github.com/stoplightio/prism/releases) and placing it in your /user/local/bin directory');
++        process.exit(1);
++      }
++    }
++    else {
++      console.log('Please download the Windows binary (https://github.com/stoplightio/prism/releases) and place it in your /usr/local/bin directory');
++      process.exit(1);
++    }
++  }
++  console.log('Activating Prism (~20s)');
++  prism = spawn('prism', ['run', '--mock', '--list', '--spec', 'https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json'], { detached: true });
++  console.log('Prism Started');
++  sleep(PRISM_STARTUP_MS);
++  prism.stdout.on('data', function(data) {
++    console.log(data.toString());
++  });
++  prism.stderr.on('data', function(data) {
++    console.log(data.toString());
++  });
++});
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
+-  var API_KEY = 'SendGrid API Key'
+-  if(process.env.TRAVIS) {
+-    var TEST_HOST = process.env.MOCK_HOST
+-  } else {
+-    var TEST_HOST = 'localhost'
+-  }
+-
+-  var sg = sendgrid(API_KEY, TEST_HOST)
+-
+-  var request = sg.emptyRequest()
+-  if(TEST_HOST == 'localhost') {
+-    request.test = true
+-    request.port = 4010
+-  }
+-  request.method = 'GET'
+-  request.path = '/v3/suppression/spam_report/{email}'
+-  request.headers['X-Mock'] = 200
+-  it('test_suppression_spam_report__email__get had the correct response code', function(done) {
++  this.timeout(TEST_TIMEOUT_MS);
++  var API_KEY = 'SendGrid API Key'
++  if(process.env.TRAVIS) {
++    var TEST_HOST = process.env.MOCK_HOST
++  } else {
++    var TEST_HOST = 'localhost'
++  }
++
++  var sg = sendgrid(API_KEY, TEST_HOST)
++
++  var request = sg.emptyRequest()
++  if(TEST_HOST == 'localhost') {
++    request.test = true
++    request.port = 4010
++  }
++  request.method = 'GET'
++  request.path = '/v3/suppression/spam_reports/{email}'
++  request.headers['X-Mock'] = 200
++  it('test_suppression_spam_reports__email__get had the correct response code', function(done) {
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
+-  this.timeout(30000);
++  this.timeout(TEST_TIMEOUT_MS);
++
++after(function() {
++  prism.kill();
++})"
+sendgrid_sendgrid-nodejs,cfb43c59168ba9d0d06008e9bd9f76f49bcfb539,"Merge pull request #328 from MikeRalphson/patch-2  Drop 0.10, 0.12 from supported Node.js versions, add 6",package.json,"-  ""version"": ""4.7.0"",
++  ""version"": ""4.10.0"",
++    ""mailparser"": ""^0.6.1"",","-    ""node"": "">= 0.4.7""
++    ""node"": "">= 4.0.0""","-  ""version"": ""4.7.0"",
++  ""version"": ""4.10.0"",
+-    ""node"": "">= 0.4.7""
++    ""node"": "">= 4.0.0""
++    ""mailparser"": ""^0.6.1"","
+sendgrid_sendgrid-nodejs,caf5b9a0c81911c61984fade2a265c35a49c7d8e,Merge pull request #330 from jamsinclair/parse-implementation-303  Add Inbound Parse data parser #303,package.json,"-  ""version"": ""4.7.0"",
++  ""version"": ""4.9.0"",","+    ""mailparser"": ""^0.6.1"",","-  ""version"": ""4.7.0"",
++  ""version"": ""4.9.0"",
++    ""mailparser"": ""^0.6.1"","
+sendgrid_sendgrid-nodejs,0c5918bbed15dc714f5eb8aced615ca8e3d8ca1b,Merge pull request #348 from dhenriques/fix-click-tracking-typescript-definitions  Fix typescript definition for the ClickTracking,index.d.ts,"-        getSubstitutions(): Substitution[];
++        getSubstitutions(): {[key: string]: string};
+-        host: string;
++        host?: string;
+-        headers: {
++        headers?: {
+-        body: string | {};
+-        queryParams: {
++        body?: string | {};
++        queryParams?: {
+-        test: boolean;
+-        port: string|number;
++        test?: boolean;
++        port?: string|number;
+-        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;
++        API(request: SendGrid.Rest.Request): Promise<SendGrid.Rest.Response>;","-        constructor(enable: boolean, enableText: string);
+-
+-        getEnable(): boolean;
+-        setEnable(enabled: boolean): void;
+-
+-        getEnableText(): string;
+-        setEnableText(enableText: string): void;
+-
+-        toJSON(): {
+-            enable: boolean;
+-            enable_text: string;
++        constructor(enable: boolean, enableText: boolean);
++
++        getEnable(): boolean;
++        setEnable(enabled: boolean): void;
++
++        getEnableText(): boolean;
++        setEnableText(enableText: boolean): void;
++
++        toJSON(): {
++            enable: boolean;
++            enable_text: boolean;","-        constructor(enable: boolean, enableText: string);
+-
+-        getEnable(): boolean;
+-        setEnable(enabled: boolean): void;
+-
+-        getEnableText(): string;
+-        setEnableText(enableText: string): void;
+-
+-        toJSON(): {
+-            enable: boolean;
+-            enable_text: string;
++        constructor(enable: boolean, enableText: boolean);
++
++        getEnable(): boolean;
++        setEnable(enabled: boolean): void;
++
++        getEnableText(): boolean;
++        setEnableText(enableText: boolean): void;
++
++        toJSON(): {
++            enable: boolean;
++            enable_text: boolean;
+-        getSubstitutions(): Substitution[];
++        getSubstitutions(): {[key: string]: string};
+-        host: string;
++        host?: string;
+-        headers: {
++        headers?: {
+-        body: string | {};
+-        queryParams: {
++        body?: string | {};
++        queryParams?: {
+-        test: boolean;
+-        port: string|number;
++        test?: boolean;
++        port?: string|number;
+-        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;
++        API(request: SendGrid.Rest.Request): Promise<SendGrid.Rest.Response>;"
+sendgrid_sendgrid-nodejs,24cd4bf8586bfb572ee9aa9980f26e2d4b6e62bd,Merge pull request #354 from SPARTAN563/fix/issue-353  fix: Make various TypeScript request components optional,index.d.ts,"-        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;
++        API(request: SendGrid.Rest.Request): Promise<SendGrid.Rest.Response>;","-        host: string;
++        host?: string;
+-        headers: {
++        headers?: {
+-        body: string | {};
+-        queryParams: {
++        body?: string | {};
++        queryParams?: {
+-        test: boolean;
+-        port: string|number;
++        test?: boolean;
++        port?: string|number;","-        host: string;
++        host?: string;
+-        headers: {
++        headers?: {
+-        body: string | {};
+-        queryParams: {
++        body?: string | {};
++        queryParams?: {
+-        test: boolean;
+-        port: string|number;
++        test?: boolean;
++        port?: string|number;
+-        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;
++        API(request: SendGrid.Rest.Request): Promise<SendGrid.Rest.Response>;"
+sendgrid_sendgrid-nodejs,45136e4bbc02e33dfe4167b8a416df6f8d850481,Merge pull request #308 from SPARTAN563/feat/typescript-promise-api  feat: Add support for promises to the TypeScript definitions file,index.d.ts,"-        emptyRequest(): SendGrid.Rest.Request;
++        emptyRequest(data?: SendGrid.Rest.Request): SendGrid.Rest.Request;",+        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;,"-        emptyRequest(): SendGrid.Rest.Request;
++        emptyRequest(data?: SendGrid.Rest.Request): SendGrid.Rest.Request;
++        API(request: SendGrid.Rest.Request): PromiseLike<SendGrid.Rest.Response>;"
+sendgrid_sendgrid-nodejs,d4acbcedc8899b0ec16b526aa02da05c742d7451,Merge pull request #251 from EMSSConsulting/feat/typescript-definitions  Add TypeScript typings definition file for v3 API,package.json,"-  ""version"": ""4.2.0"",
++  ""version"": ""4.2.1"",
++    ""debug"": ""^2.2.0"",
+-    ""debug"": ""^2.2.0"",","-    ""sinon-chai"": ""^2.8.0""
++    ""sinon-chai"": ""^2.8.0"",
++    ""typescript"": ""^2.0.0""
+-    ""test"": ""mocha""
++    ""test"": ""mocha"",
++    ""test:typescript"": ""tsc""
++  ""typings"": ""index.d.ts"",","-  ""version"": ""4.2.0"",
++  ""version"": ""4.2.1"",
++    ""debug"": ""^2.2.0"",
+-    ""debug"": ""^2.2.0"",
+-    ""sinon-chai"": ""^2.8.0""
++    ""sinon-chai"": ""^2.8.0"",
++    ""typescript"": ""^2.0.0""
+-    ""test"": ""mocha""
++    ""test"": ""mocha"",
++    ""test:typescript"": ""tsc""
++  ""typings"": ""index.d.ts"","
+sendgrid_sendgrid-nodejs,25623f6830e5c0f00de1e3f3db24b6f90f1781c8,Merge pull request #278 from fullcube/tkp/contact-importer  Tkp/contact importer,package.json,"-  ""version"": ""4.0.1"",
++  ""version"": ""4.1.0"",","+    ""async.ensureasync"": ""^0.5.2"",
++    ""async.queue"": ""^0.5.2"",
++    ""bottleneck"": ""^1.12.0"",
++    ""lodash.chunk"": ""^4.2.0"",
++    ""debug"": ""^2.2.0"",
+-    ""mocha"": ""^2.4.5""
++    ""mocha"": ""^2.4.5"",
++    ""mocha-sinon"": ""^1.1.5"",
++    ""sinon"": ""^1.17.5"",
++    ""sinon-chai"": ""^2.8.0""","-  ""version"": ""4.0.1"",
++  ""version"": ""4.1.0"",
++    ""async.ensureasync"": ""^0.5.2"",
++    ""async.queue"": ""^0.5.2"",
++    ""bottleneck"": ""^1.12.0"",
++    ""lodash.chunk"": ""^4.2.0"",
++    ""debug"": ""^2.2.0"",
+-    ""mocha"": ""^2.4.5""
++    ""mocha"": ""^2.4.5"",
++    ""mocha-sinon"": ""^1.1.5"",
++    ""sinon"": ""^1.17.5"",
++    ""sinon-chai"": ""^2.8.0"""
+sendgrid_sendgrid-nodejs,18da9c733950313fd0a17336760f3ab1ac38ccff,Merge branch 'eslint' into callback-function-signature,lib/sendgrid.js,"+var SendGridError = require('./helpers/error');
++
++//Helper to check if response is valid
++function isValidResponse(response) {
++  return (
++    response &&
++    response.statusCode &&
++    response.statusCode >= 200 &&
++    response.statusCode <= 299
++  );
++}
++
++//Helper to get a new empty request
++function getEmptyRequest() {
++  return JSON.parse(JSON.stringify(emptyRequest));
++}
+-  var globalRequest = this.emptyRequest();
++  var globalRequest = getEmptyRequest();
+-  this.emptyRequest = function() {
+-    return JSON.parse(JSON.stringify(emptyRequest));
+-  };
++  this.emptyRequest = getEmptyRequest;
++
++    //If no callback provided, we will return a promise
++    if (!callback) {
++      if (!SendGrid.Promise) {
++        throw new SendGridError('Promise API not supported');
++      }
++      return new SendGrid.Promise(function(resolve, reject) {
++        client.API(request, function(response) {
++          if (isValidResponse(response)) {
++            resolve(response);
++          }
++          else {
++            reject(response);
++          }
++        });
++      });
++    }
++
++    //Use callback
+-      callback(response);
++      if (isValidResponse(response)) {
++        callback(null, response);
++      }
++      else {
++        var error = new SendGridError('Response error');
++        callback(error, response);
++      }
+-module.exports =
+-{
++//Try to use native promises by default
++SendGrid.Promise = Promise || null;
++
++module.exports = {
+-  emptyRequest: SendGrid.emptyRequest(),
++  emptyRequest: getEmptyRequest(),","+//Helper to get empty request
++function getEmptyRequest() {
++  return JSON.parse(JSON.stringify(emptyRequest));
++}
++
+-  var globalRequest = this.emptyRequest();
++  var globalRequest = getEmptyRequest();
+-  this.emptyRequest = function() {
+-    return JSON.parse(JSON.stringify(emptyRequest));
+-  };
++  this.emptyRequest = getEmptyRequest;
+-  emptyRequest: SendGrid.emptyRequest(),
++  emptyRequest: getEmptyRequest(),","+var SendGridError = require('./helpers/error');
++
++//Helper to check if response is valid
++function isValidResponse(response) {
++  return (
++    response &&
++    response.statusCode &&
++    response.statusCode >= 200 &&
++    response.statusCode <= 299
++  );
++}
++
++//Helper to get a new empty request
++function getEmptyRequest() {
++  return JSON.parse(JSON.stringify(emptyRequest));
++}
++
++//Helper to get empty request
++function getEmptyRequest() {
++  return JSON.parse(JSON.stringify(emptyRequest));
++}
+-  var globalRequest = this.emptyRequest();
++  var globalRequest = getEmptyRequest();
+-  this.emptyRequest = function() {
+-    return JSON.parse(JSON.stringify(emptyRequest));
+-  };
++  this.emptyRequest = getEmptyRequest;
++
++    //If no callback provided, we will return a promise
++    if (!callback) {
++      if (!SendGrid.Promise) {
++        throw new SendGridError('Promise API not supported');
++      }
++      return new SendGrid.Promise(function(resolve, reject) {
++        client.API(request, function(response) {
++          if (isValidResponse(response)) {
++            resolve(response);
++          }
++          else {
++            reject(response);
++          }
++        });
++      });
++    }
++
++    //Use callback
+-      callback(response);
++      if (isValidResponse(response)) {
++        callback(null, response);
++      }
++      else {
++        var error = new SendGridError('Response error');
++        callback(error, response);
++      }
+-module.exports =
+-{
++//Try to use native promises by default
++SendGrid.Promise = Promise || null;
++
++module.exports = {
+-  emptyRequest: SendGrid.emptyRequest(),
++  emptyRequest: getEmptyRequest(),"
+sendgrid_sendgrid-nodejs,57bc8892cb4d84af8692a80f44c2fc379cd88ec1,Fix conflicts and linting,lib/email.js,"-Email.prototype.addUniqueArg = function (object_literal) {
+-  this.smtpapi.addUniqueArg(object_literal);
++Email.prototype.addUniqueArg = function (key, val) {
++  this.smtpapi.addUniqueArg(key, val);","+  this.cc      = params.cc      || [];
++};
++
++Email.prototype.addCc = function(cc) {
++  this.cc.push(cc);
++};
++
++Email.prototype.setCcs = function(cc) {
++  this.cc = cc;
++  if (this.cc)          { web.cc           = this.cc; }","+  this.cc      = params.cc      || [];
++Email.prototype.addCc = function(cc) {
++  this.cc.push(cc);
++};
++
++Email.prototype.setCcs = function(cc) {
++  this.cc = cc;
++};
++
+-Email.prototype.addUniqueArg = function (object_literal) {
+-  this.smtpapi.addUniqueArg(object_literal);
++Email.prototype.addUniqueArg = function (key, val) {
++  this.smtpapi.addUniqueArg(key, val);
++  if (this.cc)          { web.cc           = this.cc; }"
+sendgrid_sendgrid-nodejs,57bc8892cb4d84af8692a80f44c2fc379cd88ec1,Fix conflicts and linting,test/integration/sendgrid.test.js,"+
++    it('handles unique args being set in the email', function(done) {
++      payload.subject   += ""handles unique args being set in the email"";
++
++      var email = new Email(payload);
++      email.addSubstitution('-name-', ['Kyle', 'David']);
++      email.addSubstitution('-meme-', ['-kyleSection-', '-davidSection-']);
++      email.addSubstitution('-id-', ['111', '222']);
++      email.addSection('-kyleSection-', 'I heard you liked batman so I killed your parents');
++      email.addSection('-davidSection-', 'Metal gear?!!?!!!!eleven');
++      email.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++
++      email.setUniqueArgs({secret_code: '-id-'});
++      email.addUniqueArg('secret_code_sg', '111-222-333');
++
++      sendgrid.send(email, function(err, json) {
++        expect(err).to.be.null;
++        expect(json.message).to.equal('success');
++
++        done();
++      });
++    });","+        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++
++        done();
++      });
++    });
++
++    it('has array of CCs', function(done) {
++      payload.subject += ""has array of CCs"";
++      payload.cc = ['sendgrid-nodejs@mailinator.com']
++
++      sendgrid.send(payload, function(err, json) {
++        expect(err).to.be.null;
++        expect(json.message).to.equal('success');","+        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++        expect(json.message).to.equal('success');
++
++        done();
++      });
++    });
++
++    it('has array of CCs', function(done) {
++      payload.subject += ""has array of CCs"";
++      payload.cc = ['sendgrid-nodejs@mailinator.com']
++
++      sendgrid.send(payload, function(err, json) {
++        expect(err).to.be.null;
++        expect(json.message).to.equal('success');
++
++    it('handles unique args being set in the email', function(done) {
++      payload.subject   += ""handles unique args being set in the email"";
++
++      var email = new Email(payload);
++      email.addSubstitution('-name-', ['Kyle', 'David']);
++      email.addSubstitution('-meme-', ['-kyleSection-', '-davidSection-']);
++      email.addSubstitution('-id-', ['111', '222']);
++      email.addSection('-kyleSection-', 'I heard you liked batman so I killed your parents');
++      email.addSection('-davidSection-', 'Metal gear?!!?!!!!eleven');
++      email.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++
++      email.setUniqueArgs({secret_code: '-id-'});
++      email.addUniqueArg('secret_code_sg', '111-222-333');
++
++      sendgrid.send(email, function(err, json) {
++        expect(err).to.be.null;
++        expect(json.message).to.equal('success');
++
++        done();
++      });
++    });"
+sendgrid_sendgrid-nodejs,57bc8892cb4d84af8692a80f44c2fc379cd88ec1,Fix conflicts and linting,test/lib/email.test.js,"+  it('should be possible to addUniqueArg', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.addUniqueArg('unique_arg1', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.addUniqueArg('unique_arg2', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value', unique_arg2: 'value'});
++  });
++
++  it('should be possible to setUniqueArgs', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.setUniqueArgs({unique_arg1: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.setUniqueArgs({unique_arg2: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg2: 'value'});
++  });
++
++  it('should be possible to setUniqueArgs and addUniqueArg', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.setUniqueArgs({unique_arg1: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.addUniqueArg('unique_arg2', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value', unique_arg2: 'value'});
++  });","+    it('should have multiple CCs if as an array', function() {
++      var payload     = Object.create(default_payload);
++      payload.cc     = ['david.tomberlin@sendgrid.com', 'otherguy@sendgrid.com'];
++      var email       = new Email(payload);
++      var format      = email.toWebFormat();
++
++      expect(format.cc).to.equal(payload.cc);
++    });
++
++  it('should be possible to addCc', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.addCc('sorin@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.addCc('sorin2@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com', 'sorin2@domain.com']);
++  });
++
++  it('should be possible to setCcs', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.setCcs(['sorin@domain.com']);
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.setCcs(['sorin2@domain.com']);
++    expect(email.cc).to.eql(['sorin2@domain.com']);
++  });
++
++  it('should be possible to setCcs and addCc', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.setCcs(['sorin@domain.com']);
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.addCc('sorin2@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com', 'sorin2@domain.com']);
++  });","-]
++];
++    it('should have multiple CCs if as an array', function() {
++      var payload     = Object.create(default_payload);
++      payload.cc     = ['david.tomberlin@sendgrid.com', 'otherguy@sendgrid.com'];
++      var email       = new Email(payload);
++      var format      = email.toWebFormat();
++
++      expect(format.cc).to.equal(payload.cc);
++    });
++
+-      
+-      Array.prototype['testMethod'] = function() {
++
++      Array.prototype.testMethod = function() {
+-      
++
+-    
++
+-      var email       = new Email({from: 'test@test.com', subject: 'testing', text: 'testing'});  
++      var email       = new Email({from: 'test@test.com', subject: 'testing', text: 'testing'});
+-      expect(format.to).to.not.be.empty; 
++      expect(format.to).to.not.be.empty;
++  it('should be possible to addUniqueArg', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.addUniqueArg('unique_arg1', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.addUniqueArg('unique_arg2', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value', unique_arg2: 'value'});
++  });
++
++  it('should be possible to setUniqueArgs', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.setUniqueArgs({unique_arg1: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.setUniqueArgs({unique_arg2: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg2: 'value'});
++  });
++
++  it('should be possible to setUniqueArgs and addUniqueArg', function() {
++    var email = new Email();
++    expect(email.smtpapi.header.unique_args).to.eql({});
++    email.setUniqueArgs({unique_arg1: 'value'});
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value'});
++    email.addUniqueArg('unique_arg2', 'value');
++    expect(email.smtpapi.header.unique_args).to.eql({unique_arg1: 'value', unique_arg2: 'value'});
++  });
++
++  it('should be possible to addCc', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.addCc('sorin@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.addCc('sorin2@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com', 'sorin2@domain.com']);
++  });
++
++  it('should be possible to setCcs', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.setCcs(['sorin@domain.com']);
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.setCcs(['sorin2@domain.com']);
++    expect(email.cc).to.eql(['sorin2@domain.com']);
++  });
++
++  it('should be possible to setCcs and addCc', function() {
++    var email = new Email();
++    expect(email.cc).to.eql([]);
++    email.setCcs(['sorin@domain.com']);
++    expect(email.cc).to.eql(['sorin@domain.com']);
++    email.addCc('sorin2@domain.com');
++    expect(email.cc).to.eql(['sorin@domain.com', 'sorin2@domain.com']);
++  });
+-      email.addFilter('subscriptiontrack', 'enable', 1)
+-      email.addFilter('subscriptiontrack', ""text/plain"", ""If you would like to unsubscribe and stop receiving these emails click here: <% %>."")
++      email.addFilter('subscriptiontrack', 'enable', 1);
++      email.addFilter('subscriptiontrack', ""text/plain"", ""If you would like to unsubscribe and stop receiving these emails click here: <% %>."");"
+sendgrid_sendgrid-nodejs,a95cbfaee276114c2e7985dcb8f2d02d6111b465,Merges in pull request from @shtylman for standard nodejs error handling,lib/sendgrid.js,"-var querystring = require('querystring');
+-var https = require('https');
+-var nodemailer = require('nodemailer');
+-var _ = require('underscore');
+-var path = require('path');
+-var mime = require('mime');
++var package_json  = require('./../package.json');
++var nodemailer    = require('nodemailer');
++var request       = require('request');
++var Email         = require('./email');
+-var Email = require('./email');
+-  this.api_user = api_user;
+-  this.api_key = api_key;
++  this.api_user     = api_user;
++  this.api_key      = api_key;
++  this.version      = package_json.version;
++  this.SMTP         = ""SMTP"";
++  if (process.env.NODE_ENV == ""test"") {
++    this.SMTP = ""STUB"";
++  }
+- * Sends an email via REST and returns true if the
++ * Sends an email via web. See .web method for more details.
++ *
++ */
++SendGrid.prototype.send = function(email, callback) {
++  this.web(email, callback);
++}
++
++/*
++ * Sends an email via web and returns true if the
+-SendGrid.prototype.send = function(email, callback) {
++SendGrid.prototype.web = function(email, callback) {
++  var api_user  = this.api_user;
++  var api_key   = this.api_key;
++
+-
+-  var boundary = Math.random();
+-  function send_rest() {
+-    var post_data;
+-    var options = {
+-      host: 'sendgrid.com',
+-      path: '/api/mail.send.json',
+-      method: 'POST'
+-    };
++  function send_web() {
++    var req   = request({
++      method    : 'POST',
++      uri       : ""https://sendgrid.com/api/mail.send.json""
++    }, function(err, resp, body) {
++      if (err) {
++        return cb(false, err);
++      } else {
++        try {
++          var json = JSON.parse(body);
++          return cb(json.message == 'success', json.errors);
++        } catch (err) {
++          cb(false, ""Invalid JSON response from server"");
++        }
++      } 
++    }); 
+-    if (email.hasFiles()) {
+-      post_data = self.getMultipartData(email, boundary);
+-      var length = 0;
+-      for (var buf in post_data) {
+-        length += post_data[buf].length;
++    var form          = email.toWebFormat();
++    form['api_user']  = api_user;
++    form['api_key']   = api_key;
++
++    var reqForm = req.form();
++    for (var field in form) {
++      var value = form[field];
++      if (value && value.filename) {
++        if (value.cid) {
++          reqForm.append(""content[""+value.filename+""]"", value.cid);
++        }
++        reqForm.append(""files[""+value.filename+""]"", value.content, {filename: value.filename, contentType: value.contentType});
++      } else {
++        try {
++          reqForm.append(field, value);
++        } catch(err) {}
+-      options.headers = {
+-        'Content-Type': 'multipart/form-data; boundary=' + boundary,
+-        'Content-Length': length
+-      };
+-    } else {
+-      post_data = self.getPostData(email);
+-      options.headers = {
+-        'Content-Type': 'application/x-www-form-urlencoded',
+-        'Content-Length': post_data.length
+-      };
+-
+-    var request = https.request(options, function(res) {
+-      res.setEncoding('utf8');
+-      var content = '';
+-      res.on('data', function(chunk) {
+-        content += chunk;
+-      });
+-      res.on('end', function() {
+-        var json = JSON.parse(content);
+-        cb(json.message == 'success', json.errors);
+-      });
+-    });
+-
+-    // If the email has files, it will be a multipart request.
+-    // TODO: make this feel less dirty.
+-    if (email.hasFiles()) {
+-      for (var key in post_data) {
+-        request.write(post_data[key]);
+-      }
+-    } else {
+-      request.write(post_data);
+-    }
+-
+-    request.end();
+-  if (email.hasFiles()) {
+-    email.processFiles(function(success, message) {
+-      if (success) {
+-        send_rest();
+-      } else {
+-        cb(false, message);
+-      }
+-    });
+-  } else {
+-    send_rest();
+-  }
++  send_web();
+-  smtpTransport = nodemailer.createTransport(""SMTP"", {
++  smtpTransport = nodemailer.createTransport(this.SMTP, {
+-        return cb(false, response);
++        return cb(false, error.data);
+-  if (_.size(email.files) > 0) {
+-    email.processFiles(function(success, message) {
+-      if (success) {
+-        send_smtp();
+-      } else {
+-        cb(false, message);
+-      }
+-    });
+-  } else {
+-    send_smtp();
+-  }
++  send_smtp();
+-/*
+- * Function for internal use.
+- *
+- * Used for returning the parameters for sending an email via REST.
+- *
+- * This method is only used when there are no attachments on the email object.
+- *
+- * @param   {Email}  email  The email object to be sent via REST.
+- * @return  {String}        Querystring format of the email to be sent.
+- */
+-SendGrid.prototype.getPostData = function(email) {
+-  var data = {
+-    api_user: this.api_user,
+-    api_key: this.api_key
+-  }
+-
+-  _.extend(data, email.toWebFormat());
+-
+-  return querystring.stringify(data);
+-};
+-
+-/*
+- * Function for internal use.
+- *
+- * Used for returning the parameters for sending an email via REST.
+- *
+- * This method is used when there are attachments on the email object.
+- *
+- * @param   {Email}   email     The email object to be sent via REST.
+- * @param   {String}  boundary  The boundary to use between multipart sections.
+- * @return  {Array[Buffer]}     An array of buffers for each section of
+- *                              the multipart/form-data request.
+- */
+-SendGrid.prototype.getMultipartData = function(email, boundary) {
+-  var data = [];
+-  data.push(new Buffer(encodeField(boundary, 'api_user', this.api_user)));
+-  data.push(new Buffer(encodeField(boundary, 'api_key', this.api_key)));
+-
+-  _(email.toWebFormat()).each(function(v, k) {
+-    data.push(new Buffer(encodeField(boundary, k, v)));
+-  });
+-
+-  _(email.files).each(function(file) {
+-    data.push(encodeFile(boundary, file.contentType, 'files[' + file.filename + ']', file.filename));
+-    data.push(file.content);
+-    data.push(new Buffer('\r\n'));
+-  });
+-
+-  return data;
+-};
+-
+-/*
+- * Function for encoding a field as a multipart/form-data request.
+- *
+- * @param   {String}  boundary  The boundary to use between requests.
+- * @param   {String}  name      The name of the parameter.
+- * @param   {String}  value     The value of the parameter.
+- * @return  {String}            The string representing the multipart/form-data section.
+- */
+-function encodeField(boundary, name, value) {
+-    var return_part = ""--"" + boundary + ""\r\n"";
+-    return_part += ""Content-Disposition: form-data; name=\"""" + name + ""\""\r\n\r\n"";
+-    return_part += value + ""\r\n"";
+-    return return_part;
+-}
+-
+-/*
+- * Function for encoding a file as a multipart/form-data request.
+- *
+- * @param   {String}  boundary  The boundary to use between requests.
+- * @param   {String}  type      The Content-Type of the file
+- * @param   {String}  name      The name of the parameter.
+- * @param   {String}  filename  The name of the file.
+- * @return  {String}            The string representing the multipart/form-data section.
+- */
+-function encodeFile(boundary, type, name, filename) {
+-    var return_part = ""--"" + boundary + ""\r\n"";
+-    return_part += ""Content-Disposition: form-data; name=\"""" + name + ""\""; filename=\"""" + filename + ""\""\r\n"";
+-    return_part += ""Content-Type: "" + type + ""\r\n\r\n"";
+-    return return_part;
+-}
+-","-        var json = JSON.parse(content);
+-        cb(json.message == 'success', json.errors);
++        try {
++          var json = JSON.parse(content);
++        } catch (err) {
++          return cb(err);
++        }
++
++        var err = undefined;
++        if (json.message !== 'success') {
++          var msg = 'sendgrid error';
++          if (json.errors) {
++            msg = json.errors.shift();
++          }
++
++          return cb(new Error(msg));
++        }
++
++        cb(err);","-var querystring = require('querystring');
+-var https = require('https');
+-var nodemailer = require('nodemailer');
+-var _ = require('underscore');
+-var path = require('path');
+-var mime = require('mime');
++var package_json  = require('./../package.json');
++var nodemailer    = require('nodemailer');
++var request       = require('request');
++var Email         = require('./email');
+-var Email = require('./email');
+-  this.api_user = api_user;
+-  this.api_key = api_key;
++  this.api_user     = api_user;
++  this.api_key      = api_key;
++  this.version      = package_json.version;
++  this.SMTP         = ""SMTP"";
++  if (process.env.NODE_ENV == ""test"") {
++    this.SMTP = ""STUB"";
++  }
+- * Sends an email via REST and returns true if the
++ * Sends an email via web. See .web method for more details.
++ *
++ */
++SendGrid.prototype.send = function(email, callback) {
++  this.web(email, callback);
++}
++
++/*
++ * Sends an email via web and returns true if the
+-SendGrid.prototype.send = function(email, callback) {
++SendGrid.prototype.web = function(email, callback) {
++  var api_user  = this.api_user;
++  var api_key   = this.api_key;
++
+-
+-  var boundary = Math.random();
+-  function send_rest() {
+-    var post_data;
+-    var options = {
+-      host: 'sendgrid.com',
+-      path: '/api/mail.send.json',
+-      method: 'POST'
+-    };
++  function send_web() {
++    var req   = request({
++      method    : 'POST',
++      uri       : ""https://sendgrid.com/api/mail.send.json""
++    }, function(err, resp, body) {
++      try {
++        var json = JSON.parse(body);
++      } catch (err) {
++        return cb(err);
++      }
+-    if (email.hasFiles()) {
+-      post_data = self.getMultipartData(email, boundary);
+-      var length = 0;
+-      for (var buf in post_data) {
+-        length += post_data[buf].length;
++      var err = undefined;
++      if (json.message !== 'success') {
++        var msg = 'sendgrid error';
++        if (json.errors) {
++          msg = json.errors.shift();
++        }
++
++        return cb(new Error(msg));
+-      options.headers = {
+-        'Content-Type': 'multipart/form-data; boundary=' + boundary,
+-        'Content-Length': length
+-      };
+-    } else {
+-      post_data = self.getPostData(email);
+-      options.headers = {
+-        'Content-Type': 'application/x-www-form-urlencoded',
+-        'Content-Length': post_data.length
+-      };
++
++      cb(err);
++
++      //if (err) {
++      //  return cb(false, err);
++      //} else {
++      //  try {
++      //    var json = JSON.parse(body);
++      //    return cb(json.message == 'success', json.errors);
++      //  } catch (err) {
++      //    cb(false, ""Invalid JSON response from server"");
++      //  }
++      //} 
++    }); 
++
++    var form          = email.toWebFormat();
++    form['api_user']  = api_user;
++    form['api_key']   = api_key;
++
++    var reqForm = req.form();
++    for (var field in form) {
++      var value = form[field];
++      if (value && value.filename) {
++        if (value.cid) {
++          reqForm.append(""content[""+value.filename+""]"", value.cid);
++        }
++        reqForm.append(""files[""+value.filename+""]"", value.content, {filename: value.filename, contentType: value.contentType});
++      } else {
++        try {
++          reqForm.append(field, value);
++        } catch(err) {}
++      }
+-
+-    var request = https.request(options, function(res) {
+-      res.setEncoding('utf8');
+-      var content = '';
+-      res.on('data', function(chunk) {
+-        content += chunk;
+-      });
+-      res.on('end', function() {
+-        var json = JSON.parse(content);
+-        cb(json.message == 'success', json.errors);
+-      });
+-    });
+-
+-    // If the email has files, it will be a multipart request.
+-    // TODO: make this feel less dirty.
+-    if (email.hasFiles()) {
+-      for (var key in post_data) {
+-        request.write(post_data[key]);
+-      }
+-    } else {
+-      request.write(post_data);
+-    }
+-
+-    request.end();
+-  if (email.hasFiles()) {
+-    email.processFiles(function(success, message) {
+-      if (success) {
+-        send_rest();
+-      } else {
+-        cb(false, message);
+-      }
+-    });
+-  } else {
+-    send_rest();
+-  }
++  send_web();
+-  smtpTransport = nodemailer.createTransport(""SMTP"", {
++  smtpTransport = nodemailer.createTransport(this.SMTP, {
+-        return cb(false, response);
++        return cb(false, error.data);
+-  if (_.size(email.files) > 0) {
+-    email.processFiles(function(success, message) {
+-      if (success) {
+-        send_smtp();
+-      } else {
+-        cb(false, message);
+-      }
+-    });
+-  } else {
+-    send_smtp();
+-  }
++  send_smtp();
+-/*
+- * Function for internal use.
+- *
+- * Used for returning the parameters for sending an email via REST.
+- *
+- * This method is only used when there are no attachments on the email object.
+- *
+- * @param   {Email}  email  The email object to be sent via REST.
+- * @return  {String}        Querystring format of the email to be sent.
+- */
+-SendGrid.prototype.getPostData = function(email) {
+-  var data = {
+-    api_user: this.api_user,
+-    api_key: this.api_key
+-  }
+-
+-  _.extend(data, email.toWebFormat());
+-
+-  return querystring.stringify(data);
+-};
+-
+-/*
+- * Function for internal use.
+- *
+- * Used for returning the parameters for sending an email via REST.
+- *
+- * This method is used when there are attachments on the email object.
+- *
+- * @param   {Email}   email     The email object to be sent via REST.
+- * @param   {String}  boundary  The boundary to use between multipart sections.
+- * @return  {Array[Buffer]}     An array of buffers for each section of
+- *                              the multipart/form-data request.
+- */
+-SendGrid.prototype.getMultipartData = function(email, boundary) {
+-  var data = [];
+-  data.push(new Buffer(encodeField(boundary, 'api_user', this.api_user)));
+-  data.push(new Buffer(encodeField(boundary, 'api_key', this.api_key)));
+-
+-  _(email.toWebFormat()).each(function(v, k) {
+-    data.push(new Buffer(encodeField(boundary, k, v)));
+-  });
+-
+-  _(email.files).each(function(file) {
+-    data.push(encodeFile(boundary, file.contentType, 'files[' + file.filename + ']', file.filename));
+-    data.push(file.content);
+-    data.push(new Buffer('\r\n'));
+-  });
+-
+-  return data;
+-};
+-
+-/*
+- * Function for encoding a field as a multipart/form-data request.
+- *
+- * @param   {String}  boundary  The boundary to use between requests.
+- * @param   {String}  name      The name of the parameter.
+- * @param   {String}  value     The value of the parameter.
+- * @return  {String}            The string representing the multipart/form-data section.
+- */
+-function encodeField(boundary, name, value) {
+-    var return_part = ""--"" + boundary + ""\r\n"";
+-    return_part += ""Content-Disposition: form-data; name=\"""" + name + ""\""\r\n\r\n"";
+-    return_part += value + ""\r\n"";
+-    return return_part;
+-}
+-
+-/*
+- * Function for encoding a file as a multipart/form-data request.
+- *
+- * @param   {String}  boundary  The boundary to use between requests.
+- * @param   {String}  type      The Content-Type of the file
+- * @param   {String}  name      The name of the parameter.
+- * @param   {String}  filename  The name of the file.
+- * @return  {String}            The string representing the multipart/form-data section.
+- */
+-function encodeFile(boundary, type, name, filename) {
+-    var return_part = ""--"" + boundary + ""\r\n"";
+-    return_part += ""Content-Disposition: form-data; name=\"""" + name + ""\""; filename=\"""" + filename + ""\""\r\n"";
+-    return_part += ""Content-Type: "" + type + ""\r\n\r\n"";
+-    return return_part;
+-}
+-"
+sendgrid_sendgrid-nodejs,2ec848449b8b607c22200f57e92aa96140833bea,Merge pull request #29 from partkyle/category-array  category should be an array,test/lib/smtpapi_header.test.js,+var _ = require('underscore');,"-      expect(header.category).to.equal(categories[0]);
++      expect(header.category).to.eql([categories[0]]);","+var _ = require('underscore');
+-      expect(header.category).to.equal(categories[0]);
++      expect(header.category).to.eql([categories[0]]);"
+sendgrid_sendgrid-nodejs,7503c831e2bf9d370b728eaa88e4bc9f2f9c0036,Merge branch 'documentation' into file-handler  Conflicts: 	lib/email.js,lib/email.js,"-var step = require('step');
++var Step = require('step');
+-  step(
+-    function handleFiles() {
+-      for(var i in self.files) {
+-        self.files[i].loadContent(this.parallel());
+-      }
+-    },
+-    function finish(err, messages) {
+-      if (err) {
+-        callback(false, messages);
+-      } else {
+-        callback(true);
+-      }
++
++  function handleFiles() {
++    for(var i in self.files) {
++      self.files[i].loadContent(this.parallel());
+-  );
++  };
++
++  function finish(err, messages) {
++    if (err) {
++      callback(false, messages);
++    } else {
++      callback(true);
++    }
++  };
++
++  Step(handleFiles, finish);","+/**
++ * Class to handle storing the properties relative to an email.
++ *
++ * @param {Object} params
++ *    @param {string|array}   to      The to address(es) of the email
++ *    @param {string}         from    The from address of the email
++ *    @param {SmtpapiHeaders} smtpapi The SendGrid x-smtpapi headers object
++ *    @param {string}         subject The subject of the email
++ *    @param {string}         text    The text/plain content of an email
++ *    @param {string}         html    The text/html content of an email
++ *    @param {string|array}   bcc     The bcc address(es) of the email
++ *    @param {Date}           date    The date of the email
++ *    @param {object}         headers The custom headers on an email
++ */
+-/*
++/**
++/**
++ * This method sets the headers on an email, if the value passed in is an object.
++ *
++ * @param {object} val An object of custom headers
++ */
++/**
++ * This method will add a header, or multiple headers, to an email.
++ *
++ * @param {object} val An object of custom headers
++ */
++/**
++ * This method is a proxy for adding a to address to the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addTo
++ */
++/**
++ * This method is a proxy for the add sub val on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addSubVal
++ */
++/**
++ * This method is a proxy for setting unique args on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setUniqueArgs
++ */
++/**
++ * This method is a proxy for adding unique args on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addUniqueArgs
++ */
++/**
++ * This method is a proxy for setting categories on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setCategory
++ */
++/**
++ * This method is a proxy for adding categories on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addCategory
++ */
++/**
++ * This method is a proxy for setting sections on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setSection
++ */
++/**
++ * This method is a proxy for adding sections on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addSection
++ */
++/**
++ * This method is a proxy for adding a filter setting on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addFilterSetting
++ */
++/**
++ * This method is a proxy for setting a filter setting on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setFilterSetting
++ */
++/**
++ * This method adds a file to the email object as an attachment
++ * It uses the FileHandler object.
++ *
++ * @param {object} file_object The file object
++ *
++ * @see FileHandler
++ */
++/**
++ * This method is used to process files. It uses step.js to asychronously load the contents of each file.
++ *
++ * @param {function} callback The callback to call when the method returns
++ */
++
++/**
++ * This method returns the email object is a format to be consumed by the SendGrid.send
++ * using the web api
++ *
++ * @see SendGrid.send
++ */
++/**
++ * This method returns the email object is a format to be consumed by the SendGrid.smtp
++ * using the smtp api
++ *
++ * @see SendGrid.smtp
++ */
+-/*
++/**
++/**
++ * This method is used to show if there are files on this email object
++ *
++ * @return boolean
++ */
++// export the object as the only object in this module","-var step = require('step');
++var Step = require('step');
++/**
++ * Class to handle storing the properties relative to an email.
++ *
++ * @param {Object} params
++ *    @param {string|array}   to      The to address(es) of the email
++ *    @param {string}         from    The from address of the email
++ *    @param {SmtpapiHeaders} smtpapi The SendGrid x-smtpapi headers object
++ *    @param {string}         subject The subject of the email
++ *    @param {string}         text    The text/plain content of an email
++ *    @param {string}         html    The text/html content of an email
++ *    @param {string|array}   bcc     The bcc address(es) of the email
++ *    @param {Date}           date    The date of the email
++ *    @param {object}         headers The custom headers on an email
++ */
+-/*
++/**
++/**
++ * This method sets the headers on an email, if the value passed in is an object.
++ *
++ * @param {object} val An object of custom headers
++ */
++/**
++ * This method will add a header, or multiple headers, to an email.
++ *
++ * @param {object} val An object of custom headers
++ */
++/**
++ * This method is a proxy for adding a to address to the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addTo
++ */
++/**
++ * This method is a proxy for the add sub val on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addSubVal
++ */
++/**
++ * This method is a proxy for setting unique args on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setUniqueArgs
++ */
++/**
++ * This method is a proxy for adding unique args on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addUniqueArgs
++ */
++/**
++ * This method is a proxy for setting categories on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setCategory
++ */
++/**
++ * This method is a proxy for adding categories on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addCategory
++ */
++/**
++ * This method is a proxy for setting sections on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setSection
++ */
++/**
++ * This method is a proxy for adding sections on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addSection
++ */
++/**
++ * This method is a proxy for adding a filter setting on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.addFilterSetting
++ */
++/**
++ * This method is a proxy for setting a filter setting on the SmtpapiHeaders
++ *
++ * @see SmtpapiHeaders.setFilterSetting
++ */
++/**
++ * This method adds a file to the email object as an attachment
++ * It uses the FileHandler object.
++ *
++ * @param {object} file_object The file object
++ *
++ * @see FileHandler
++ */
++/**
++ * This method is used to process files. It uses step.js to asychronously load the contents of each file.
++ *
++ * @param {function} callback The callback to call when the method returns
++ */
+-  step(
+-    function handleFiles() {
+-      for(var i in self.files) {
+-        self.files[i].loadContent(this.parallel());
+-      }
+-    },
+-    function finish(err, messages) {
+-      if (err) {
+-        callback(false, messages);
+-      } else {
+-        callback(true);
+-      }
++
++  function handleFiles() {
++    for(var i in self.files) {
++      self.files[i].loadContent(this.parallel());
+-  );
+-};
+-
++  };
++
++  function finish(err, messages) {
++    if (err) {
++      callback(false, messages);
++    } else {
++      callback(true);
++    }
++  };
++
++  Step(handleFiles, finish);
++};
++
++/**
++ * This method returns the email object is a format to be consumed by the SendGrid.send
++ * using the web api
++ *
++ * @see SendGrid.send
++ */
++/**
++ * This method returns the email object is a format to be consumed by the SendGrid.smtp
++ * using the smtp api
++ *
++ * @see SendGrid.smtp
++ */
+-/*
++/**
++/**
++ * This method is used to show if there are files on this email object
++ *
++ * @return boolean
++ */
++// export the object as the only object in this module"
+sendgrid_sendgrid-nodejs,0c376653324b80b90e6b0be337d7783165e42af6,Merge remote-tracking branch 'mine/file-handler' into file-handler,test/integration/attachments.test.js,-,"-var Email = require('../../lib/Email');
++var Email = require('../../lib/email');","-var Email = require('../../lib/Email');
++var Email = require('../../lib/email');
+-"
+sendgrid_sendgrid-nodejs,a3d99eab02f34f48697e0a2a2c387365680d9a09,Merge branch 'master' into file-handler,package.json,"-    ""mime"": ""*""
++    ""mime"": ""*"",
++    ""step"": "">= 0.0.5""","-  ""name"": ""sendgrid-nodejs"",
++  ""name"": ""sendgrid"",
+-  ""version"": ""0.1.0-1"",
++  ""version"": ""0.1.0-2"",","-  ""name"": ""sendgrid-nodejs"",
++  ""name"": ""sendgrid"",
+-  ""version"": ""0.1.0-1"",
++  ""version"": ""0.1.0-2"",
+-    ""mime"": ""*""
++    ""mime"": ""*"",
++    ""step"": "">= 0.0.5"""
+sendgrid_sendgrid-nodejs,61ee7cb5dbd69467855f5625d8187bae02004507,Merge remote-tracking branch 'upstream/master'  Conflicts: 	package.json,package.json,"-  ""contributors"": [""Kyle Partridge <kyle.partridge@sendgrid.com>"",
+-                  ""David Tomberlin <david.tomberlin@sendgrid.com>""],
++  ""contributors"": [
++    ""Kyle Partridge <kyle.partridge@sendgrid.com>"",
++    ""David Tomberlin <david.tomberlin@sendgrid.com>""
++  ],
+-  ""version"": ""0.1.0-1"",
++  ""version"": ""0.1.0-2"",
+-    ""url"": ""https://github.com/sendgrid/sendgrid-nodejs""
++    ""url"": ""git://github.com/sendgrid/sendgrid-nodejs.git""","-  ""name"": ""sendgrid-nodejs"",
++  ""name"": ""sendgrid"",
+-  ""version"": ""0.1.0-1"",
++  ""version"": ""0.1.0-2"",","-  ""name"": ""sendgrid-nodejs"",
++  ""name"": ""sendgrid"",
+-  ""version"": ""0.1.0-1"",
++  ""version"": ""0.1.0-2"","
+sendgrid_sendgrid-nodejs,217ed28a36b2e156b74d705fc017efe88e1696ab,Merge pull request #16 from partkyle/fix-sending  Fix Posting of non-multipart data,lib/sendgrid.js,"-var fs = require('fs');
+-function SendGrid(credentials) {
+-  this.api_user = credentials.api_user;
+-  this.api_key = credentials.api_key;
++/*
++ * Class for handling communications with SendGrid.
++ *
++ * @param  {String}  api_user  The SendGrid username.
++ * @param  {String}  api_key   The key credentials for SendGrid.
++ */
++function SendGrid(api_user, api_key) {
++  this.api_user = api_user;
++  this.api_key = api_key;
+-var boundary = Math.random();
+-
+-/*
+- * Sends an email and returns true if the
++/*
++ * Sends an email via REST and returns true if the
+- * @returns {Boolean}
+-*/
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                    the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++
++  var boundary = Math.random();
+-      post_data = self.getMultipartData(email);
++      post_data = self.getMultipartData(email, boundary);
++      var content = '';
+-        var json = JSON.parse(chunk);
++        content += chunk;
++      });
++      res.on('end', function() {
++        var json = JSON.parse(content);
++/*
++ * Sends an email via SMTP and returns true if the
++ * message was sent successfully.
++ *
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                     the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is only used when there are no attachments on the email object.
++ *
++ * @param   {Email}  email  The email object to be sent via REST.
++ * @return  {String}        Querystring format of the email to be sent.
++ */
+-SendGrid.prototype.getMultipartData = function(email) {
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is used when there are attachments on the email object.
++ *
++ * @param   {Email}   email     The email object to be sent via REST.
++ * @param   {String}  boundary  The boundary to use between multipart sections.
++ * @return  {Array[Buffer]}     An array of buffers for each section of
++ *                              the multipart/form-data request.
++ */
++SendGrid.prototype.getMultipartData = function(email, boundary) {
+-function encodeField(boundary,name,value) {
++/*
++ * Function for encoding a field as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  value     The value of the parameter.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeField(boundary, name, value) {
+-function encodeFile(boundary,type,name,filename) {
++/*
++ * Function for encoding a file as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  type      The Content-Type of the file
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  filename  The name of the file.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeFile(boundary, type, name, filename) {","-      method: 'POST',
++      method: 'POST'
++
+-    for (var key in post_data) {
+-      request.write(post_data[key]);
++    // If the email has files, it will be a multipart request.
++    // TODO: make this feel less dirty.
++    if (email.hasFiles()) {
++      for (var key in post_data) {
++        request.write(post_data[key]);
++      }
++    } else {
++      request.write(post_data);
++","-var fs = require('fs');
+-function SendGrid(credentials) {
+-  this.api_user = credentials.api_user;
+-  this.api_key = credentials.api_key;
++/*
++ * Class for handling communications with SendGrid.
++ *
++ * @param  {String}  api_user  The SendGrid username.
++ * @param  {String}  api_key   The key credentials for SendGrid.
++ */
++function SendGrid(api_user, api_key) {
++  this.api_user = api_user;
++  this.api_key = api_key;
+-var boundary = Math.random();
+-
+-/*
+- * Sends an email and returns true if the
++/*
++ * Sends an email via REST and returns true if the
+- * @returns {Boolean}
+-*/
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                    the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++
++  var boundary = Math.random();
+-      method: 'POST',
++      method: 'POST'
++
+-      post_data = self.getMultipartData(email);
++      post_data = self.getMultipartData(email, boundary);
++      var content = '';
+-        var json = JSON.parse(chunk);
++        content += chunk;
++      });
++      res.on('end', function() {
++        var json = JSON.parse(content);
+-    for (var key in post_data) {
+-      request.write(post_data[key]);
++    // If the email has files, it will be a multipart request.
++    // TODO: make this feel less dirty.
++    if (email.hasFiles()) {
++      for (var key in post_data) {
++        request.write(post_data[key]);
++      }
++    } else {
++      request.write(post_data);
++
++/*
++ * Sends an email via SMTP and returns true if the
++ * message was sent successfully.
++ *
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                     the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is only used when there are no attachments on the email object.
++ *
++ * @param   {Email}  email  The email object to be sent via REST.
++ * @return  {String}        Querystring format of the email to be sent.
++ */
+-SendGrid.prototype.getMultipartData = function(email) {
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is used when there are attachments on the email object.
++ *
++ * @param   {Email}   email     The email object to be sent via REST.
++ * @param   {String}  boundary  The boundary to use between multipart sections.
++ * @return  {Array[Buffer]}     An array of buffers for each section of
++ *                              the multipart/form-data request.
++ */
++SendGrid.prototype.getMultipartData = function(email, boundary) {
+-function encodeField(boundary,name,value) {
++/*
++ * Function for encoding a field as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  value     The value of the parameter.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeField(boundary, name, value) {
+-function encodeFile(boundary,type,name,filename) {
++/*
++ * Function for encoding a file as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  type      The Content-Type of the file
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  filename  The name of the file.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeFile(boundary, type, name, filename) {"
+sendgrid_sendgrid-nodejs,a3a7b743b2b6cde14498561fe1d637243f7cb75c,Merge pull request #15 from partkyle/documentation  Documentation,lib/sendgrid.js,"+      var content = '';
+-        var json = JSON.parse(chunk);
++        content += chunk;
++      });
++      res.on('end', function() {
++        var json = JSON.parse(content);","-var fs = require('fs');
+-function SendGrid(credentials) {
+-  this.api_user = credentials.api_user;
+-  this.api_key = credentials.api_key;
++/*
++ * Class for handling communications with SendGrid.
++ *
++ * @param  {String}  api_user  The SendGrid username.
++ * @param  {String}  api_key   The key credentials for SendGrid.
++ */
++function SendGrid(api_user, api_key) {
++  this.api_user = api_user;
++  this.api_key = api_key;
+-var boundary = Math.random();
+-
+-/*
+- * Sends an email and returns true if the
++/*
++ * Sends an email via REST and returns true if the
+- * @returns {Boolean}
+-*/
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                    the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++
++  var boundary = Math.random();
+-      post_data = self.getMultipartData(email);
++      post_data = self.getMultipartData(email, boundary);
++/*
++ * Sends an email via SMTP and returns true if the
++ * message was sent successfully.
++ *
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                     the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is only used when there are no attachments on the email object.
++ *
++ * @param   {Email}  email  The email object to be sent via REST.
++ * @return  {String}        Querystring format of the email to be sent.
++ */
+-SendGrid.prototype.getMultipartData = function(email) {
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is used when there are attachments on the email object.
++ *
++ * @param   {Email}   email     The email object to be sent via REST.
++ * @param   {String}  boundary  The boundary to use between multipart sections.
++ * @return  {Array[Buffer]}     An array of buffers for each section of
++ *                              the multipart/form-data request.
++ */
++SendGrid.prototype.getMultipartData = function(email, boundary) {
+-function encodeField(boundary,name,value) {
++/*
++ * Function for encoding a field as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  value     The value of the parameter.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeField(boundary, name, value) {
+-function encodeFile(boundary,type,name,filename) {
++/*
++ * Function for encoding a file as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  type      The Content-Type of the file
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  filename  The name of the file.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeFile(boundary, type, name, filename) {","-var fs = require('fs');
+-function SendGrid(credentials) {
+-  this.api_user = credentials.api_user;
+-  this.api_key = credentials.api_key;
++/*
++ * Class for handling communications with SendGrid.
++ *
++ * @param  {String}  api_user  The SendGrid username.
++ * @param  {String}  api_key   The key credentials for SendGrid.
++ */
++function SendGrid(api_user, api_key) {
++  this.api_user = api_user;
++  this.api_key = api_key;
+-var boundary = Math.random();
+-
+-/*
+- * Sends an email and returns true if the
++/*
++ * Sends an email via REST and returns true if the
+- * @returns {Boolean}
+-*/
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                    the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++
++  var boundary = Math.random();
+-      post_data = self.getMultipartData(email);
++      post_data = self.getMultipartData(email, boundary);
++      var content = '';
+-        var json = JSON.parse(chunk);
++        content += chunk;
++      });
++      res.on('end', function() {
++        var json = JSON.parse(content);
++/*
++ * Sends an email via SMTP and returns true if the
++ * message was sent successfully.
++ *
++ * @param    {Email|Object}  email     An email object or a hash that has
++ *                                     the values for the email to be sent.
++ * @param    {Function}      callback  A function to call when the processing is done.
++ */
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is only used when there are no attachments on the email object.
++ *
++ * @param   {Email}  email  The email object to be sent via REST.
++ * @return  {String}        Querystring format of the email to be sent.
++ */
+-SendGrid.prototype.getMultipartData = function(email) {
++/*
++ * Function for internal use.
++ *
++ * Used for returning the parameters for sending an email via REST.
++ *
++ * This method is used when there are attachments on the email object.
++ *
++ * @param   {Email}   email     The email object to be sent via REST.
++ * @param   {String}  boundary  The boundary to use between multipart sections.
++ * @return  {Array[Buffer]}     An array of buffers for each section of
++ *                              the multipart/form-data request.
++ */
++SendGrid.prototype.getMultipartData = function(email, boundary) {
+-function encodeField(boundary,name,value) {
++/*
++ * Function for encoding a field as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  value     The value of the parameter.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeField(boundary, name, value) {
+-function encodeFile(boundary,type,name,filename) {
++/*
++ * Function for encoding a file as a multipart/form-data request.
++ *
++ * @param   {String}  boundary  The boundary to use between requests.
++ * @param   {String}  type      The Content-Type of the file
++ * @param   {String}  name      The name of the parameter.
++ * @param   {String}  filename  The name of the file.
++ * @return  {String}            The string representing the multipart/form-data section.
++ */
++function encodeFile(boundary, type, name, filename) {"
+sendgrid_sendgrid-nodejs,249bebb86edcfddeb24a7c17e4c6f27e4c380407,Merge pull request #13 from partkyle/file-attach  File Attachments,lib/email.js,"+Email.prototype.setSection = function(val) {
++  this.smtpapi.setSection(val);
++}
++
++Email.prototype.addSection = function(val) {
++  this.smtpapi.addSection(val);
++}
++","+var fs = require('fs');
+-    files: [],
++    files: {},
++    file_data: {},
++Email.prototype.addFile = function(filename, filepath) {
++  this.files[filename] = filepath;
++}
++
++Email.prototype.processFiles = function(callback) {
++  var self = this;
++  var attachments_count = _.size(this.files);
++  _(this.files).each(function(v, k) {
++    fs.readFile(v, function(error, data) {
++      attachments_count--;
++      if (error) {
++        return callback(false, error);
++      } else {
++        self.file_data[k] = data;
++      }
++
++      if (attachments_count == 0) {
++        callback(true);
++      }
++    });
++  });
++}
++
+-    replyto: this.replyto,
+-    date: this.date,
+-    files: this.files,
+-    headers: this.headers
++    replyto: this.replyto
++  if (_.size(this.file_data) > 0) {
++    var attachments = [];
++    _(this.file_data).each(function(v, k) {
++      attachments.push({filename: k, contents: v});
++    });
++    data.attachments = attachments;
++  }
++
++Email.prototype.hasFiles = function() {
++  return _(this.files).size() > 0;
++}
++","+var fs = require('fs');
+-    files: [],
++    files: {},
++    file_data: {},
++Email.prototype.setSection = function(val) {
++  this.smtpapi.setSection(val);
++}
++
++Email.prototype.addSection = function(val) {
++  this.smtpapi.addSection(val);
++}
++
++}
++
++Email.prototype.addFile = function(filename, filepath) {
++  this.files[filename] = filepath;
++}
++
++Email.prototype.processFiles = function(callback) {
++  var self = this;
++  var attachments_count = _.size(this.files);
++  _(this.files).each(function(v, k) {
++    fs.readFile(v, function(error, data) {
++      attachments_count--;
++      if (error) {
++        return callback(false, error);
++      } else {
++        self.file_data[k] = data;
++      }
++
++      if (attachments_count == 0) {
++        callback(true);
++      }
++    });
++  });
+-    replyto: this.replyto,
+-    date: this.date,
+-    files: this.files,
+-    headers: this.headers
++    replyto: this.replyto
++  if (_.size(this.file_data) > 0) {
++    var attachments = [];
++    _(this.file_data).each(function(v, k) {
++      attachments.push({filename: k, contents: v});
++    });
++    data.attachments = attachments;
++  }
++
++Email.prototype.hasFiles = function() {
++  return _(this.files).size() > 0;
++}
++"
+sendgrid_sendgrid-nodejs,3281e9b0a7f50eefef2c0e3029182d5a364e8e39,Merge remote-tracking branch 'upstream/master',test/lib/sendgrid.test.js,"-  api_key: 'testing'
++  api_key: 'nope'","-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support substitution values', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-',['Panda']);
++      mail.html = 'You are a <strong>-name-</strong>';
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support sections being set in the email', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-', ['Kyle', 'David']);
++      mail.addSubVal('-meme-', ['-kyleSection-', '-davidSection-']);
++      mail.addSection({'-kyleSection-': 'I heard you liked batman so I killed your parents'});
++      mail.addSection({'-davidSection-': 'Metal gear?!!?!!!!eleven'});
++      mail.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
+-        if (success) should.fail('An error should have been reported');
++        if (success) assert.ok(false, 'An error should have been reported');
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support substitution values', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-',['Panda', 'Cow']);
++      mail.html = 'You are a <strong>-name-</strong>';
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support sections being set in the email', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-', ['Kyle', 'David']);
++      mail.addSubVal('-meme-', ['-kyleSection-', '-davidSection-']);
++      mail.addSection({'-kyleSection-': 'I heard you liked batman so I killed your parents'});
++      mail.addSection({'-davidSection-': 'Metal gear?!!?!!!!eleven'});
++      mail.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
+-        if (success) should.fail('An error should have been reported');
++        if (success) assert.ok(false, 'An error should have been reported');","-  api_key: 'testing'
++  api_key: 'nope'
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support substitution values', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-',['Panda']);
++      mail.html = 'You are a <strong>-name-</strong>';
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support sections being set in the email', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-', ['Kyle', 'David']);
++      mail.addSubVal('-meme-', ['-kyleSection-', '-davidSection-']);
++      mail.addSection({'-kyleSection-': 'I heard you liked batman so I killed your parents'});
++      mail.addSection({'-davidSection-': 'Metal gear?!!?!!!!eleven'});
++      mail.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
+-        if (success) should.fail('An error should have been reported');
++        if (success) assert.ok(false, 'An error should have been reported');
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
+-        if (!success) should.fail(message);
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support substitution values', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-',['Panda', 'Cow']);
++      mail.html = 'You are a <strong>-name-</strong>';
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should support sections being set in the email', function(done) {
++      var mail = new Email(smtp_params);
++      mail.addTo(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      mail.addSubVal('-name-', ['Kyle', 'David']);
++      mail.addSubVal('-meme-', ['-kyleSection-', '-davidSection-']);
++      mail.addSection({'-kyleSection-': 'I heard you liked batman so I killed your parents'});
++      mail.addSection({'-davidSection-': 'Metal gear?!!?!!!!eleven'});
++      mail.html = ""Yo -name-!<br /> Here's a meme for you:<br /> -meme-"";
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
+-        if (success) should.fail('An error should have been reported');
++        if (success) assert.ok(false, 'An error should have been reported');"
+sendgrid_sendgrid-nodejs,f565424a7a68a3b7c1e5132bf8b8da4ed0832892,Merge remote-tracking branch 'upstream/master',test/lib/sendgrid.test.js,"-  api_key: 'testing'
++  api_key: 'nope'","-var should = require('should');
++
++    it('should be able to send to multiple recipients', function(done) {
++      var params = _.clone(text_params);
++      params.to = ['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com'];
++      sendgrid.send(params, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should support filters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters (web)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer!');
++      sendgrid.send(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    // this test will most likely fail until node_modules is updated
++    it('should support filters with unicode parameters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters w/ unicode ✔ (Web)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer with a ✔ in it!');
++      sendgrid.send(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should report errors to the user', function(done) {
++      var mail = new Email({});
++      sendgrid.send(mail, function(success, message) {
++        if (success) should.fail('An error should have been reported');
++        done();
++      });
++    });
+-    it('should report errors back to the user', function(done) {
++    it('should support the reply_to field', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' Reply To Test';
++      mail.replyto = 'noreply@sendgrid.com';
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should support filters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters (Smtp)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer!');
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    // this test will most likely fail until node_modules is updated
++    it('should support filters with unicode parameters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters w/ unicode ✔ (Smtp)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer with a ✔ in it!');
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should report errors to the user', function(done) {
++
++  describe('x-smtpapi', function(done) {
++    function setupEmail() {
++      var mail = new Email({
++        from: 'kyle.partridge@sendgrid.com',
++        subject: 'Multiple Recipients with headers',
++        text: 'Multiple recipients through x-smtpapi test'
++      });
++      mail.addTo('kyle.partridge@sendgrid.com');
++      mail.addTo('david.tomberlin@sendgrid.com');
++
++      return mail;
++    }
++
++    it('should be able to send an email to mutiple recipients through the Web Api', function(done) {
++      var mail = setupEmail();
++      mail.subject = '(Web) ' + mail.subject;
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should be able to send an email to mutiple recipients through the Smtp Api', function(done) {
++      var mail = setupEmail();
++      mail.subject = '(SMTP) ' + mail.subject;
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++  })","-var should = require('should');
+-  api_key: 'testing'
++  api_key: 'nope'
++
++    it('should be able to send to multiple recipients', function(done) {
++      var params = _.clone(text_params);
++      params.to = ['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com'];
++      sendgrid.send(params, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should support filters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters (web)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer!');
++      sendgrid.send(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    // this test will most likely fail until node_modules is updated
++    it('should support filters with unicode parameters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters w/ unicode ✔ (Web)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer with a ✔ in it!');
++      sendgrid.send(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should report errors to the user', function(done) {
++      var mail = new Email({});
++      sendgrid.send(mail, function(success, message) {
++        if (success) should.fail('An error should have been reported');
++        done();
++      });
++    });
+-    it('should report errors back to the user', function(done) {
++    it('should support the reply_to field', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' Reply To Test';
++      mail.replyto = 'noreply@sendgrid.com';
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should support filters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters (Smtp)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer!');
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    // this test will most likely fail until node_modules is updated
++    it('should support filters with unicode parameters', function(done) {
++      var mail = new Email(smtp_params);
++      mail.subject += ' filters w/ unicode ✔ (Smtp)';
++      mail.addFilterSetting('footer', 'enable', 1);
++      mail.addFilterSetting('footer', 'text/plain', 'This is mah footer with a ✔ in it!');
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) should.fail(message);
++        done();
++      });
++    });
++
++    it('should report errors to the user', function(done) {
++
++  describe('x-smtpapi', function(done) {
++    function setupEmail() {
++      var mail = new Email({
++        from: 'kyle.partridge@sendgrid.com',
++        subject: 'Multiple Recipients with headers',
++        text: 'Multiple recipients through x-smtpapi test'
++      });
++      mail.addTo('kyle.partridge@sendgrid.com');
++      mail.addTo('david.tomberlin@sendgrid.com');
++
++      return mail;
++    }
++
++    it('should be able to send an email to mutiple recipients through the Web Api', function(done) {
++      var mail = setupEmail();
++      mail.subject = '(Web) ' + mail.subject;
++      sendgrid.send(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++
++    it('should be able to send an email to mutiple recipients through the Smtp Api', function(done) {
++      var mail = setupEmail();
++      mail.subject = '(SMTP) ' + mail.subject;
++      sendgrid.smtp(mail, function(success, message) {
++        if (!success) assert.ok(false, message);
++        done();
++      });
++    });
++  })"
+sendgrid_sendgrid-nodejs,4f6c83b75a24cfba733e634f1a4df1758d9d0a87,Merge remote-tracking branch 'siyegen/x-smtpapi' into x-smtpapi,test/lib/smtpapi_header.test.js,"-      JSON.parse(header.toJson()).should.eql(header);
++
++      var parse = JSON.parse(header.toJson());
++      parse.to.should.eql(header.to);
++      parse.unique_args.should.eql(header.unique_args);
++      parse.filters.should.eql(header.filters);
++
++    it('should not remove any parameters on this object', function() {
++      header.addTo('kyle.partridge@sendgrid.com');
++      header.addTo(['david.tomberlin@sendgrid.com']);
++      header.addUniqueArgs({foo: 'bar'});
++      header.addFilterSetting('footer', 'enable', 1);
++      header.addFilterSetting('footer', 'text/html', '<b>boo</b>');
++
++      // call the json method to test if it removed anything
++      header.toJson();
++
++      header.to.should.eql(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      header.unique_args.should.eql({foo: 'bar'});
++      header.filters.should.eql({
++        footer: {
++          settings: {
++            enable: 1,
++            'text/html': '<b>boo</b>'
++          }
++        }
++      });
++    });","-
+-      assert(!_.isEmpty(JSON.parse(json).to), 'should be empty');
++      console.log(""value of to: %s "", JSON.parse(json).to);
++      assert(_.isUndefined(JSON.parse(json).to), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).sub), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).sub), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).unique_args), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).unique_args), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).category), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).category), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).filters), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).filters), 'should be empty');","-      JSON.parse(header.toJson()).should.eql(header);
++
++      var parse = JSON.parse(header.toJson());
++      parse.to.should.eql(header.to);
++      parse.unique_args.should.eql(header.unique_args);
++      parse.filters.should.eql(header.filters);
+-
+-      assert(!_.isEmpty(JSON.parse(json).to), 'should be empty');
++      console.log(""value of to: %s "", JSON.parse(json).to);
++      assert(_.isUndefined(JSON.parse(json).to), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).sub), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).sub), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).unique_args), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).unique_args), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).category), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).category), 'should be empty');
+-      assert(!_.isEmpty(JSON.parse(json).filters), 'should be empty');
++      assert(_.isUndefined(JSON.parse(json).filters), 'should be empty');
++    });
++
++    it('should not remove any parameters on this object', function() {
++      header.addTo('kyle.partridge@sendgrid.com');
++      header.addTo(['david.tomberlin@sendgrid.com']);
++      header.addUniqueArgs({foo: 'bar'});
++      header.addFilterSetting('footer', 'enable', 1);
++      header.addFilterSetting('footer', 'text/html', '<b>boo</b>');
++
++      // call the json method to test if it removed anything
++      header.toJson();
++
++      header.to.should.eql(['kyle.partridge@sendgrid.com', 'david.tomberlin@sendgrid.com']);
++      header.unique_args.should.eql({foo: 'bar'});
++      header.filters.should.eql({
++        footer: {
++          settings: {
++            enable: 1,
++            'text/html': '<b>boo</b>'
++          }
++        }
++      });"
+sendgrid_sendgrid-nodejs,e8314bb62bace94e5af2c51c61b7fb8071db80c4,Merge remote-tracking branch 'kyle/x-smtpapi' into x-smtpapi,test/lib/smtpapi_header.test.js,"+
++  describe('json', function() {
++    it('should produce valid json', function() {
++      header.addTo('kyle.partridge@sendgrid.com');
++      header.addTo(['david.tomberlin@sendgrid.com']);
++      header.addUniqueArgs({foo: 'bar'});
++      header.addFilterSetting('footer', 'enable', 1);
++      header.addFilterSetting('footer', 'text/html', '<b>boo</b>');
++      JSON.parse(header.toJson()).should.eql(header);
++    });
++  });","+
++  describe('json', function() {
++    it('should produce valid json', function() {
++      header.addTo('kyle.partridge@sendgrid.com');
++      header.addTo(['david.tomberlin@sendgrid.com']);
++      header.addUniqueArgs({foo: 'bar'});
++      header.addFilterSetting('footer', 'enable', 1);
++      header.addFilterSetting('footer', 'text/html', '<b>boo</b>');
++      JSON.parse(header.toJson()).should.eql(header);
++    });
++
++    it('should not include the ""to"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).to), 'should be empty');
++    });
++
++    it('should not include the ""sub"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).sub), 'should be empty');
++    });
++
++    it('should not include the ""unique_args"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).unique_args), 'should be empty');
++    });
++
++    it('should not include the ""category"" parameter when there are none', function() {
++      header.addUniqueArgs({food: 'bar'});
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).category), 'should be empty');
++    });
++
++    it('should not include the ""filters"" parameter when there are none', function() {
++      header.addUniqueArgs({food: 'bar'});
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).filters), 'should be empty');
++    });
++  });","+
++  describe('json', function() {
++    it('should produce valid json', function() {
++      header.addTo('kyle.partridge@sendgrid.com');
++      header.addTo(['david.tomberlin@sendgrid.com']);
++      header.addUniqueArgs({foo: 'bar'});
++      header.addFilterSetting('footer', 'enable', 1);
++      header.addFilterSetting('footer', 'text/html', '<b>boo</b>');
++      JSON.parse(header.toJson()).should.eql(header);
++    });
++
++    it('should not include the ""to"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).to), 'should be empty');
++    });
++
++    it('should not include the ""sub"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).sub), 'should be empty');
++    });
++
++    it('should not include the ""unique_args"" parameter when there are none', function() {
++      header.setCategory('nothing');
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).unique_args), 'should be empty');
++    });
++
++    it('should not include the ""category"" parameter when there are none', function() {
++      header.addUniqueArgs({food: 'bar'});
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).category), 'should be empty');
++    });
++
++    it('should not include the ""filters"" parameter when there are none', function() {
++      header.addUniqueArgs({food: 'bar'});
++      var json = header.toJson();
++
++      assert(!_.isEmpty(JSON.parse(json).filters), 'should be empty');
++    });
++  });"
+sendgrid_sendgrid-nodejs,e903a504119a422be7861f9d08662996cc4246eb,Merge remote-tracking branch 'siyegen/x-smtpapi' into x-smtpapi,lib/email.js,"+Email.prototype.addUniqueArgs = function (val) {
++  this.smtpapi.addUniqueArgs(val);
++}
++
++}
++
++Email.prototype.addCategory = function(val) {
++  this.smtpapi.addCategory(val);","+Email.prototype.addUniqueArgs = function (val) {
++  this.smtpapi.addUniqueArgs(val);
++}
++
++}
++
++Email.prototype.addCategory = function(val) {
++  this.smtpapi.addCategory(val);
++Email.prototype.setFilterSetting = function(filters) {
++  this.smtpapi.setFilterSetting(filters);
++}
++","+Email.prototype.addUniqueArgs = function (val) {
++  this.smtpapi.addUniqueArgs(val);
++}
++
++}
++
++Email.prototype.addCategory = function(val) {
++  this.smtpapi.addCategory(val);
++Email.prototype.setFilterSetting = function(filters) {
++  this.smtpapi.setFilterSetting(filters);
++}
++"
+sendgrid_sendgrid-nodejs,e903a504119a422be7861f9d08662996cc4246eb,Merge remote-tracking branch 'siyegen/x-smtpapi' into x-smtpapi,lib/smtpapi_headers.js,"+var _ = require('underscore');
++
+-  this.data = {};
++  this.to = [];
++  this.sub = {};
++  this.unique_args = {};
++  this.category = [];
++  this.filters = {};
+-  if (!this.data['to']) {
+-    this.data['to'] = [];
+-  }
+-  if (typeof to == 'object') {
+-    this.data['to'] = this.data['to'].concat(to);
++  if (_.isArray(to)) {
++    this.to = this.to.concat(to);
+-    this.data['to'].push(to);
++    this.to.push(to);
+-  if (!this.data['sub']) {
+-    this.data['sub'] = {};
+-  }
+-  if (typeof val == 'object') {
+-    this.data['sub'][key] = val;
++  if (_.isArray(val)) {
++    this.sub[key] = val;
+-    this.data['sub'][key] = [val];
++    this.sub[key] = [val];
+-  if (typeof val == 'object') {
+-    this.data['unique_args'] = val;
++  if (_.isObject(val)) {
++    this.unique_args = val;
++  }
++}
++
++SmtpapiHeaders.prototype.addUniqueArgs = function(val) {
++  if (_.isObject(val)) {
++    _.extend(this.unique_args, val);
+-  this.data['category'] = val;
++  this.category = val;
++}
++
++SmtpapiHeaders.prototype.addCategory = function(val) {
++  if (_.isArray(val)) {
++    this.category.concat(val);
++  } else {
++    this.category.push(val);
++  }
+-  if (!this.data['filters']) {
+-    this.data['filters'] = {};
++  if (!this.filters[filter]) {
++    this.filters[filter] = {};
+-  if (!this.data['filters'][filter]) {
+-    this.data['filters'][filter] = {};
++  if (!this.filters[filter]['settings']) {
++    this.filters[filter]['settings'] = {};
+-  if (!this.data['filters'][filter]['settings']) {
+-    this.data['filters'][filter]['settings'] = {};
+-  }
+-
+-  this.data['filters'][filter]['settings'][setting] = val;
++  this.filters[filter]['settings'][setting] = val;
+-  var json = JSON.stringify(this.data);
++  var json = JSON.stringify(this);","+var _ = require('underscore');
++
+-  this.data = {};
++  this.to = [];
++  this.sub = {};
++  this.unique_args = {};
++  this.category = [];
++  this.filters = {};
+-  if (!this.data['to']) {
+-    this.data['to'] = [];
+-  }
+-  if (typeof to == 'object') {
+-    this.data['to'] = this.data['to'].concat(to);
++  if (_.isArray(to)) {
++    this.to = this.to.concat(to);
+-    this.data['to'].push(to);
++    this.to.push(to);
+-  if (!this.data['sub']) {
+-    this.data['sub'] = {};
+-  }
+-  if (typeof val == 'object') {
+-    this.data['sub'][key] = val;
++  if (_.isArray(val)) {
++    this.sub[key] = val;
+-    this.data['sub'][key] = [val];
++    this.sub[key] = [val];
+-  if (typeof val == 'object') {
+-    this.data['unique_args'] = val;
++  if (_.isObject(val)) {
++    this.unique_args = val;
++  }
++}
++
++SmtpapiHeaders.prototype.addUniqueArgs = function(val) {
++  if (_.isObject(val)) {
++    _.extend(this.unique_args, val);
+-  this.data['category'] = val;
++  this.category = val;
++}
++
++SmtpapiHeaders.prototype.addCategory = function(val) {
++  if (_.isArray(val)) {
++    this.category.concat(val);
++  } else {
++    this.category.push(val);
++  }
++}
++
++SmtpapiHeaders.prototype.setFilterSetting = function(filters) {
++  this.filters = filters;
+-  if (!this.data['filters']) {
+-    this.data['filters'] = {};
++  if (!this.filters[filter]) {
++    this.filters[filter] = {};
+-  if (!this.data['filters'][filter]) {
+-    this.data['filters'][filter] = {};
++  if (!this.filters[filter]['settings']) {
++    this.filters[filter]['settings'] = {};
+-  if (!this.data['filters'][filter]['settings']) {
+-    this.data['filters'][filter]['settings'] = {};
+-  }
+-
+-  this.data['filters'][filter]['settings'][setting] = val;
++  this.filters[filter]['settings'][setting] = val;
+-  var json = JSON.stringify(this.data);
++  var json = JSON.stringify(this);","+var _ = require('underscore');
++
+-  this.data = {};
++  this.to = [];
++  this.sub = {};
++  this.unique_args = {};
++  this.category = [];
++  this.filters = {};
+-  if (!this.data['to']) {
+-    this.data['to'] = [];
+-  }
+-  if (typeof to == 'object') {
+-    this.data['to'] = this.data['to'].concat(to);
++  if (_.isArray(to)) {
++    this.to = this.to.concat(to);
+-    this.data['to'].push(to);
++    this.to.push(to);
+-  if (!this.data['sub']) {
+-    this.data['sub'] = {};
+-  }
+-  if (typeof val == 'object') {
+-    this.data['sub'][key] = val;
++  if (_.isArray(val)) {
++    this.sub[key] = val;
+-    this.data['sub'][key] = [val];
++    this.sub[key] = [val];
+-  if (typeof val == 'object') {
+-    this.data['unique_args'] = val;
++  if (_.isObject(val)) {
++    this.unique_args = val;
++  }
++}
++
++SmtpapiHeaders.prototype.addUniqueArgs = function(val) {
++  if (_.isObject(val)) {
++    _.extend(this.unique_args, val);
+-  this.data['category'] = val;
++  this.category = val;
++}
++
++SmtpapiHeaders.prototype.addCategory = function(val) {
++  if (_.isArray(val)) {
++    this.category.concat(val);
++  } else {
++    this.category.push(val);
++  }
++}
++
++SmtpapiHeaders.prototype.setFilterSetting = function(filters) {
++  this.filters = filters;
+-  if (!this.data['filters']) {
+-    this.data['filters'] = {};
++  if (!this.filters[filter]) {
++    this.filters[filter] = {};
+-  if (!this.data['filters'][filter]) {
+-    this.data['filters'][filter] = {};
++  if (!this.filters[filter]['settings']) {
++    this.filters[filter]['settings'] = {};
+-  if (!this.data['filters'][filter]['settings']) {
+-    this.data['filters'][filter]['settings'] = {};
+-  }
+-
+-  this.data['filters'][filter]['settings'][setting] = val;
++  this.filters[filter]['settings'][setting] = val;
+-  var json = JSON.stringify(this.data);
++  var json = JSON.stringify(this);"
