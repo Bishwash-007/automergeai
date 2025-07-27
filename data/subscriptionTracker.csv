@@ -1,0 +1,9 @@
+repo,commit,commit_msg,file,left_diff,right_diff,merged_diff
+bishwash-007_subscriptionTracker,c63dc037dcdba879108dc8d182cf1b6e4267c488,Merge branch 'Anurag' of https://github.com/anurag3345/SubscriptionTracker,app.js,"-  await connectToDatabase();
++  await connectedtodb();","-import connectToDatabase from ""./database/mongodb.js"";
++import connectToDB from ""./database/mongodb.js"";
+-  await connectToDatabase();
++  await connectToDB();","-import connectToDatabase from ""./database/mongodb.js"";
++import connectToDB from ""./database/mongodb.js"";
+-  await connectToDatabase();
++  await connectToDB();"
